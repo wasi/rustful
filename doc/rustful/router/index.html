@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../request/index.html'>request</a><br/><a class='mod ' href='../response/index.html'>response</a><br/><a class='mod current' href='../router/index.html'>router</a><br/><a class='mod ' href='../server/index.html'>server</a><br/></div><div class='block macro'><h2>Macros</h2><a class='macro ' href='../macro.content_type!.html'>content_type!</a><br/></div>
+        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../request/index.html'>request</a><br/><a class='mod ' href='../response/index.html'>response</a><br/><a class='mod current' href='../router/index.html'>router</a><br/><a class='mod ' href='../server/index.html'>server</a><br/></div>
     </section>
 
     <nav class="sub">
@@ -39,7 +39,7 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>router</a><a class='source' id='src-959' href='../../src/rustful/src/router.rs.html#1-706'>[src]</a></h1>
+<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>router</a><a class='source' id='src-12' href='../../src/rustful/src/router.rs.html#1-650'>[src]</a></h1>
 <div class='docblock'><p><code>Router</code> stores items, such as request handlers, using an HTTP method and a path as keys.</p>
 
 <p>The <code>Router</code> can be created from a vector of predefined paths, like this:</p>
@@ -70,7 +70,7 @@
 <pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
 <span class='attribute'>#[<span class='ident'>phase</span>(<span class='ident'>syntax</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful_macros</span>;
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 
@@ -90,64 +90,9 @@
 but it allows more advanced structures to be defined without
 the need to write the same paths multiple times. This can be
 useful to lower the risk of typing errors, among other things.</p>
-<pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
-<span class='attribute'>#[<span class='ident'>phase</span>(<span class='ident'>syntax</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
-
-...
-
-
-<span class='kw'>let</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='macro'>router</span><span class='macro'>!</span>{
-    <span class='string'>&quot;/&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>show_home</span>,
-    <span class='string'>&quot;home&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>show_home</span>,
-    <span class='string'>&quot;user/:username&quot;</span> <span class='op'>=&gt;</span> {<span class='ident'>Get</span>: <span class='ident'>show_user</span>, <span class='ident'>Post</span>: <span class='ident'>save_user</span>},
-    <span class='string'>&quot;product&quot;</span> <span class='op'>=&gt;</span> {
-        <span class='ident'>Get</span>: <span class='ident'>show_all_products</span>,
-
-        <span class='string'>&quot;json&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>send_all_product_data</span>
-        <span class='string'>&quot;:id&quot;</span> <span class='op'>=&gt;</span> {
-            <span class='ident'>Get</span>: <span class='ident'>show_product</span>,
-            <span class='ident'>Post</span> <span class='op'>|</span> <span class='ident'>Delete</span>: <span class='ident'>edit_product</span>,
-
-            <span class='string'>&quot;json&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>send_product_data</span>
-        }
-    }
-};
-</pre>
-
-<p>There is also a macro for creating a route vector, like the one in the first example:</p>
-<pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
-<span class='attribute'>#[<span class='ident'>phase</span>(<span class='ident'>syntax</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
-
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
-
-...
-
-
-<span class='kw'>let</span> <span class='ident'>routes</span> <span class='op'>=</span> <span class='macro'>routes</span><span class='macro'>!</span>{
-    <span class='string'>&quot;/&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>show_home</span>,
-    <span class='string'>&quot;home&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>show_home</span>,
-    <span class='string'>&quot;user/:username&quot;</span> <span class='op'>=&gt;</span> {<span class='ident'>Get</span>: <span class='ident'>show_user</span>, <span class='ident'>Post</span>: <span class='ident'>save_user</span>},
-    <span class='string'>&quot;product&quot;</span> <span class='op'>=&gt;</span> {
-        <span class='ident'>Get</span>: <span class='ident'>show_all_products</span>,
-
-        <span class='string'>&quot;json&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>send_all_product_data</span>
-        <span class='string'>&quot;:id&quot;</span> <span class='op'>=&gt;</span> {
-            <span class='ident'>Get</span>: <span class='ident'>show_product</span>,
-            <span class='ident'>Post</span> <span class='op'>|</span> <span class='ident'>Delete</span>: <span class='ident'>edit_product</span>,
-
-            <span class='string'>&quot;json&quot;</span> <span class='op'>=&gt;</span> <span class='ident'>Get</span>: <span class='ident'>send_product_data</span>
-        }
-    }
-};
-
-<span class='kw'>let</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>Router</span>::<span class='ident'>from_routes</span>(<span class='ident'>routes</span>);
-</pre>
+<p>There is also a macro for creating a route vector, like the one in the first example.
+These can be found in the crate <code>rustful_macros</code>.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr>

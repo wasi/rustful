@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../request/index.html'>request</a><br/><a class='mod ' href='../response/index.html'>response</a><br/><a class='mod ' href='../router/index.html'>router</a><br/><a class='mod current' href='../server/index.html'>server</a><br/></div><div class='block macro'><h2>Macros</h2><a class='macro ' href='../macro.content_type!.html'>content_type!</a><br/></div>
+        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../request/index.html'>request</a><br/><a class='mod ' href='../response/index.html'>response</a><br/><a class='mod ' href='../router/index.html'>router</a><br/><a class='mod current' href='../server/index.html'>server</a><br/></div>
     </section>
 
     <nav class="sub">
@@ -39,13 +39,10 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>server</a><a class='source' id='src-2178' href='../../src/rustful/src/server.rs.html#1-263'>[src]</a></h1>
+<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>server</a><a class='source' id='src-1231' href='../../src/rustful/src/server.rs.html#1-284'>[src]</a></h1>
 <div class='docblock'><p><code>Server</code> listens for HTTP requests.</p>
 <pre class='rust '>
-<span class='kw'>let</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>Server</span> {
-    <span class='ident'>handlers</span>: <span class='ident'>Router</span>::<span class='ident'>from_routes</span>(<span class='ident'>routes</span>),
-    <span class='ident'>port</span>: <span class='number'>8080</span>
-};
+<span class='kw'>let</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>Server</span>::<span class='ident'>new</span>(<span class='number'>8080</span>, <span class='ident'>Router</span>::<span class='ident'>from_routes</span>(<span class='ident'>routes</span>));
 
 <span class='ident'>server</span>.<span class='ident'>run</span>();
 </pre>
