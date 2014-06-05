@@ -39,8 +39,8 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>server</a><a class='source' id='src-1231' href='../../src/rustful/src/server.rs.html#1-284'>[src]</a></h1>
-<div class='docblock'><p><code>Server</code> listens for HTTP requests.</p>
+<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>server</a><a class='source' id='src-1231' href='../../src/rustful/src/server.rs.html#1-607'>[src]</a></h1>
+<div class='docblock'><p>This module contains the <code>Server</code> and various structs and traits for handlers and cache.</p>
 <pre class='rust '>
 <span class='kw'>let</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>Server</span>::<span class='ident'>new</span>(<span class='number'>8080</span>, <span class='ident'>Router</span>::<span class='ident'>from_routes</span>(<span class='ident'>routes</span>));
 
@@ -49,16 +49,44 @@
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr>
+                        <td><a class='struct' href='struct.CachedFile.html'
+                               title='rustful::server::CachedFile'>CachedFile</a></td>
+                        <td class='docblock short'><p>Cached raw file content.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.CachedProcessedFile.html'
+                               title='rustful::server::CachedProcessedFile'>CachedProcessedFile</a></td>
+                        <td class='docblock short'><p>A processed cached file.</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='struct' href='struct.Server.html'
                                title='rustful::server::Server'>Server</a></td>
                         <td class='docblock short'></td>
                     </tr>
-                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                     <tr>
-                        <td><a class='type' href='type.HandlerFn.html'
-                               title='rustful::server::HandlerFn'>HandlerFn</a></td>
-                        <td class='docblock short'><p>A handler function for routing.</p>
+                        <td><a class='trait' href='trait.Cache.html'
+                               title='rustful::server::Cache'>Cache</a></td>
+                        <td class='docblock short'><p>A trait for cache storage.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='trait' href='trait.CachedValue.html'
+                               title='rustful::server::CachedValue'>CachedValue</a></td>
+                        <td class='docblock short'><p>This trait provides functions for handling cached resources.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='trait' href='trait.Handler.html'
+                               title='rustful::server::Handler'>Handler</a></td>
+                        <td class='docblock short'><p>A trait for request handlers.</p>
 </td>
                     </tr>
                 </table></section>

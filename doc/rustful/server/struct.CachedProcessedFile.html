@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The rustful library documentation.">
+
+    <title>rustful::server::CachedProcessedFile - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='../index.html'>rustful</a>&#8203;::<a href='index.html'>server</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.CachedFile.html'>CachedFile</a><br/><a class='struct current' href='struct.CachedProcessedFile.html'>CachedProcessedFile</a><br/><a class='struct ' href='struct.Server.html'>Server</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.Cache.html'>Cache</a><br/><a class='trait ' href='trait.CachedValue.html'>CachedValue</a><br/><a class='trait ' href='trait.Handler.html'>Handler</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'>Struct <a href='../index.html'>rustful</a>::<a href='index.html'>server</a>::<a class='struct' href=''>CachedProcessedFile</a><a class='source' id='src-2835' href='../../src/rustful/src/server.rs.html#438-445'>[src]</a></h1>
+<pre class='rust struct'>pub struct CachedProcessedFile&lt;T&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>A processed cached file.</p>
+
+<p>The file will be processed by a provided function when loaded and the result will be stored.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/core/kinds/trait.Send.html' title='core::kinds::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/core/kinds/trait.Share.html' title='core::kinds::Share'>Share</a>&gt; <a class='struct' href='../../rustful/server/struct.CachedProcessedFile.html' title='rustful::server::CachedProcessedFile'>CachedProcessedFile</a>&lt;T&gt;</code></h3><div class='methods'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(path: <a class='struct' href='http://doc.rust-lang.org/std/path/posix/struct.Path.html' title='std::path::posix::Path'>Path</a>, unused_after: <a class='type' href='http://doc.rust-lang.org/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/std/primitive.u32.html'>u32</a>&gt;, processor: fn(<a class='type' href='http://doc.rust-lang.org/std/io/type.IoResult.html' title='std::io::IoResult'>IoResult</a>&lt;<a class='struct' href='http://doc.rust-lang.org/std/io/fs/struct.File.html' title='std::io::fs::File'>File</a>&gt;) -&gt; <a class='type' href='http://doc.rust-lang.org/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;) -&gt; <a class='struct' href='../../rustful/server/struct.CachedProcessedFile.html' title='rustful::server::CachedProcessedFile'>CachedProcessedFile</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Creates a new <code>CachedProcessedFile</code> which will be freed <code>unused_after</code> seconds after the latest access.
+The file will be processed by the provided <code>processor</code> function each time it&#39;s loaded.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/core/kinds/trait.Send.html' title='core::kinds::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/core/kinds/trait.Share.html' title='core::kinds::Share'>Share</a>&gt; <a class='trait' href='../../rustful/server/trait.CachedValue.html' title='rustful::server::CachedValue'>CachedValue</a>&lt;T&gt; for <a class='struct' href='../../rustful/server/struct.CachedProcessedFile.html' title='rustful::server::CachedProcessedFile'>CachedProcessedFile</a>&lt;T&gt;</code></h3><div class='methods'><h4 id='method.use_current_value' class='method'><code>fn <a href='#method.use_current_value' class='fnname'>use_current_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='type' href='http://doc.rust-lang.org/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R</code></h4>
+<h4 id='method.load' class='method'><code>fn <a href='#method.load' class='fnname'>load</a>(&amp;self)</code></h4>
+<h4 id='method.free' class='method'><code>fn <a href='#method.free' class='fnname'>free</a>(&amp;self)</code></h4>
+<h4 id='method.expired' class='method'><code>fn <a href='#method.expired' class='fnname'>expired</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.unused' class='method'><code>fn <a href='#method.unused' class='fnname'>unused</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.use_value' class='method'><code>fn <a href='#method.use_value' class='fnname'>use_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='type' href='http://doc.rust-lang.org/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R</code></h4>
+<h4 id='method.clean' class='method'><code>fn <a href='#method.clean' class='fnname'>clean</a>(&amp;self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    <script>
+        var rootPath = "../../";
+        var currentCrate = "rustful";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script async src="../../search-index.js"></script>
+</body>
+</html>
