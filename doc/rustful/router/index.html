@@ -23,8 +23,7 @@
 
     <section class="sidebar">
         
-
-        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../request/index.html'>request</a><br/><a class='mod ' href='../response/index.html'>response</a><br/><a class='mod current' href='../router/index.html'>router</a><br/><a class='mod ' href='../server/index.html'>server</a><br/></div>
+        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../cache/index.html'>cache</a><a class='mod current' href='../router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.Request.html'>Request</a><a class='struct ' href='../struct.Response.html'>Response</a><a class='struct ' href='../struct.Server.html'>Server</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Cache.html'>Cache</a><a class='trait ' href='../trait.Handler.html'>Handler</a></div>
     </section>
 
     <nav class="sub">
@@ -39,7 +38,7 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>router</a><a class='source' id='src-11' href='../../src/rustful/src/router.rs.html#1-650'>[src]</a></h1>
+<h1 class='fqn'>Module <a href='../index.html'>rustful</a>::<a class='mod' href=''>router</a><a class='source' id='src-38' href='../../src/rustful/src/router.rs.html#1-650'>[src]</a></h1>
 <div class='docblock'><p><code>Router</code> stores items, such as request handlers, using an HTTP method and a path as keys.</p>
 
 <p>The <code>Router</code> can be created from a vector of predefined paths, like this:</p>
@@ -68,8 +67,8 @@
 
 <p>There is also a special macro for creating routers, called <code>router!(...)</code>:</p>
 <pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
-<span class='attribute'>#[<span class='ident'>phase</span>(<span class='ident'>plugin</span>)]</span>
+<span class='attribute'>\#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>phase</span>)]</span>
+<span class='attribute'>\#[<span class='ident'>phase</span>(<span class='ident'>plugin</span>)]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful_macros</span>;
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
@@ -125,7 +124,7 @@ These can be found in the crate <code>rustful_macros</code>.</p>
                 <dd>Move up in search results</dd>
                 <dt>&darr;</dt>
                 <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
+                <dt>&\#9166;</dt>
                 <dd>Go to active search result</dd>
             </dl>
         </div>

@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The rustful library documentation.">
 
-    <title>rustful::response::Response - Rust</title>
+    <title>rustful::Response - Rust</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
 
     
 </head>
@@ -23,8 +23,7 @@
 
     <section class="sidebar">
         
-
-        <p class='location'><a href='../index.html'>rustful</a>&#8203;::<a href='index.html'>response</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.Response.html'>Response</a><br/></div>
+        <p class='location'><a href='index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='cache/index.html'>cache</a><a class='mod ' href='router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Request.html'>Request</a><a class='struct current' href='struct.Response.html'>Response</a><a class='struct ' href='struct.Server.html'>Server</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.Cache.html'>Cache</a><a class='trait ' href='trait.Handler.html'>Handler</a></div>
     </section>
 
     <nav class="sub">
@@ -39,15 +38,16 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'>Struct <a href='../index.html'>rustful</a>::<a href='index.html'>response</a>::<a class='struct' href=''>Response</a><a class='source' id='src-3201' href='../../src/rustful/src/response.rs.html#9-17'>[src]</a></h1>
-<pre class='rust struct'>pub struct Response&lt;'a, 'b&gt; {
+<h1 class='fqn'>Struct <a href='index.html'>rustful</a>::<a class='struct' href=''>Response</a><a class='source' id='src-3123' href='../src/rustful/src/lib.rs.html#364-372'>[src]</a></h1>
+<pre class='rust struct'>pub struct Response&lt;''a, ''b&gt; {
     pub headers: <a class='struct' href='http://www.rust-ci.org/chris-morgan/rust-http/doc/http/headers/response/struct.HeaderCollection.html' title='http::headers::response::HeaderCollection'>HeaderCollection</a>,
     pub status: <a class='type' href='http://www.rust-ci.org/chris-morgan/rust-http/doc/http/status/type.Status.html' title='http::status::Status'>Status</a>,
     // some fields omitted
-}</pre><h2 class='fields'>Fields</h2>
+}</pre><div class='docblock'><p>An interface for sending HTTP response data to the client.</p>
+</div><h2 class='fields'>Fields</h2>
 <table><tr><td id='structfield.headers'><code>headers</code></td><td><div class='docblock'><p>The HTTP response headers. Date, content type (text/plain) and server is automatically set.</p>
 </div></td></tr><tr><td id='structfield.status'><code>status</code></td><td><div class='docblock'><p>The HTTP response status. Ok (200) is default.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, 'b&gt; <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='methods'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;'a, 'b&gt;(writer: &amp;'a mut <a class='struct' href='http://www.rust-ci.org/chris-morgan/rust-http/doc/http/server/response/struct.ResponseWriter.html' title='http::server::response::ResponseWriter'>ResponseWriter</a>&lt;'b&gt;) -&gt; <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h4>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;''a, ''b&gt; <a class='struct' href='../rustful/struct.Response.html' title='rustful::Response'>Response</a>&lt;''a, ''b&gt;</code></h3><div class='methods'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;''a, ''b&gt;(writer: &amp;''a mut <a class='struct' href='http://www.rust-ci.org/chris-morgan/rust-http/doc/http/server/response/struct.ResponseWriter.html' title='http::server::response::ResponseWriter'>ResponseWriter</a>&lt;''b&gt;) -&gt; <a class='struct' href='../rustful/struct.Response.html' title='rustful::Response'>Response</a>&lt;''a, ''b&gt;</code></h4>
 <h4 id='method.begin' class='method'><code>fn <a href='#method.begin' class='fnname'>begin</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Start writing the response. Headers and status can not be changed after it has been called.</p>
 
@@ -55,7 +55,7 @@
 It can only be called once.</p>
 </div><h4 id='method.end' class='method'><code>fn <a href='#method.end' class='fnname'>end</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Finish writing the response.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, 'b&gt; <a class='trait' href='http://doc.rust-lang.org/std/io/trait.Writer.html' title='std::io::Writer'>Writer</a> for <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='methods'><h4 id='method.write' class='method'><code>fn <a href='#method.write' class='fnname'>write</a>(&amp;mut self, content: &amp;<a href='http://doc.rust-lang.org/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/std/primitive.u8.html'>u8</a>]</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/std/io/type.IoResult.html' title='std::io::IoResult'>IoResult</a>&lt;()&gt;</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;''a, ''b&gt; <a class='trait' href='http://doc.rust-lang.org/std/io/trait.Writer.html' title='std::io::Writer'>Writer</a> for <a class='struct' href='../rustful/struct.Response.html' title='rustful::Response'>Response</a>&lt;''a, ''b&gt;</code></h3><div class='methods'><h4 id='method.write' class='method'><code>fn <a href='#method.write' class='fnname'>write</a>(&amp;mut self, content: &amp;<a href='http://doc.rust-lang.org/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/std/primitive.u8.html'>u8</a>]</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/std/io/type.IoResult.html' title='std::io::IoResult'>IoResult</a>&lt;()&gt;</code></h4>
 <div class='docblock'><p>Writes content to the client. The headers will be written the first time it&#39;s called.</p>
 </div><h4 id='method.flush' class='method'><code>fn <a href='#tymethod.flush' class='fnname'>flush</a>(&amp;mut self) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
 <h4 id='method.write_fmt' class='method'><code>fn <a href='#tymethod.write_fmt' class='fnname'>write_fmt</a>(&amp;mut self, fmt: &amp;<a class='struct' href='http://doc.rust-lang.org/core/fmt/struct.Arguments.html' title='core::fmt::Arguments'>Arguments</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
@@ -86,7 +86,7 @@ It can only be called once.</p>
 <h4 id='method.write_le_f32' class='method'><code>fn <a href='#tymethod.write_le_f32' class='fnname'>write_le_f32</a>(&amp;mut self, f: <a href='http://doc.rust-lang.org/std/primitive.f32.html'>f32</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
 <h4 id='method.write_u8' class='method'><code>fn <a href='#tymethod.write_u8' class='fnname'>write_u8</a>(&amp;mut self, n: <a href='http://doc.rust-lang.org/std/primitive.u8.html'>u8</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
 <h4 id='method.write_i8' class='method'><code>fn <a href='#tymethod.write_i8' class='fnname'>write_i8</a>(&amp;mut self, n: <a href='http://doc.rust-lang.org/std/primitive.i8.html'>i8</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
-<h4 id='method.by_ref' class='method'><code>fn <a href='#tymethod.by_ref' class='fnname'>by_ref</a>(&amp;'a mut self) -&gt; <a class='struct' href='http://doc.rust-lang.org/std/io/struct.RefWriter.html' title='std::io::RefWriter'>RefWriter</a>&lt;'a, Self&gt;</code></h4>
+<h4 id='method.by_ref' class='method'><code>fn <a href='#tymethod.by_ref' class='fnname'>by_ref</a>(&amp;''a mut self) -&gt; <a class='struct' href='http://doc.rust-lang.org/std/io/struct.RefWriter.html' title='std::io::RefWriter'>RefWriter</a>&lt;''a, Self&gt;</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -104,7 +104,7 @@ It can only be called once.</p>
                 <dd>Move up in search results</dd>
                 <dt>&darr;</dt>
                 <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
+                <dt>&\#9166;</dt>
                 <dd>Go to active search result</dd>
             </dl>
         </div>
@@ -124,13 +124,13 @@ It can only be called once.</p>
     </div>
 
     <script>
-        window.rootPath = "../../";
+        window.rootPath = "../";
         window.currentCrate = "rustful";
         window.playgroundUrl = "";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script async src="../search-index.js"></script>
 </body>
 </html>
