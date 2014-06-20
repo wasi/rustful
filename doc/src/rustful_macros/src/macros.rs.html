@@ -31,7 +31,7 @@
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Search documentation..."
+                       placeholder="Click or press 'S' to search, '?' for more options..."
                        type="search">
             </div>
         </form>
@@ -362,98 +362,98 @@
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>macro_rules</span>, <span class='ident'>plugin_registrar</span>, <span class='ident'>quote</span>, <span class='ident'>phase</span>)]</span>
 
-<span class='doccomment'>//!This crate provides some helpful macros for rustful, including `router!` and `routes!`.
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!#`router!`
-</span><span class='doccomment'>//!The `router!` macro generates a `Router` containing the provided handlers and routing tree.
-</span><span class='doccomment'>//!This can be useful to lower the risk of typing errors, among other things.
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!##Example 1
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!```rust
-</span><span class='doccomment'>//!#![feature(phase)]
-</span><span class='doccomment'>//!#[phase(plugin)]
-</span><span class='doccomment'>//!extern crate rustful_macros;
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!extern crate rustful;
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!...
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!let router = router!{
-</span><span class='doccomment'>//!	&quot;/about&quot; =&gt; Get: about_us,
-</span><span class='doccomment'>//!	&quot;/user/:user&quot; =&gt; Get: show_user,
-</span><span class='doccomment'>//!	&quot;/product/:name&quot; =&gt; Get: show_product,
-</span><span class='doccomment'>//!	&quot;/*&quot; =&gt; Get: show_error,
-</span><span class='doccomment'>//!	&quot;/&quot; =&gt; Get: show_welcome
-</span><span class='doccomment'>//!};
-</span><span class='doccomment'>//!```
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!##Example 2
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!```rust
-</span><span class='doccomment'>//!#![feature(phase)]
-</span><span class='doccomment'>//!#[phase(plugin)]
-</span><span class='doccomment'>//!extern crate rustful_macros;
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!extern crate rustful;
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!...
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!let router = router!{
-</span><span class='doccomment'>//!	&quot;/&quot; =&gt; Get: show_home,
-</span><span class='doccomment'>//!	&quot;home&quot; =&gt; Get: show_home,
-</span><span class='doccomment'>//!	&quot;user/:username&quot; =&gt; {Get: show_user, Post: save_user},
-</span><span class='doccomment'>//!	&quot;product&quot; =&gt; {
-</span><span class='doccomment'>//!		Get: show_all_products,
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!		&quot;json&quot; =&gt; Get: send_all_product_data
-</span><span class='doccomment'>//!		&quot;:id&quot; =&gt; {
-</span><span class='doccomment'>//!			Get: show_product,
-</span><span class='doccomment'>//!			Post | Delete: edit_product,
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!			&quot;json&quot; =&gt; Get: send_product_data
-</span><span class='doccomment'>//!		}
-</span><span class='doccomment'>//!	}
-</span><span class='doccomment'>//!};
-</span><span class='doccomment'>//!```
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!#`routes!`
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!The `routes!` macro generates a vector of routes, which can be used to create a `Router`.
-</span><span class='doccomment'>//!It has the same syntax as `routes!`.
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!```rust
-</span><span class='doccomment'>//!#![feature(phase)]
-</span><span class='doccomment'>//!#[phase(plugin)]
-</span><span class='doccomment'>//!extern crate rustful_macros;
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!extern crate rustful;
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!...
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!let routes = routes!{
-</span><span class='doccomment'>//!	&quot;/&quot; =&gt; Get: show_home,
-</span><span class='doccomment'>//!	&quot;home&quot; =&gt; Get: show_home,
-</span><span class='doccomment'>//!	&quot;user/:username&quot; =&gt; {Get: show_user, Post: save_user},
-</span><span class='doccomment'>//!	&quot;product&quot; =&gt; {
-</span><span class='doccomment'>//!		Get: show_all_products,
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!		&quot;json&quot; =&gt; Get: send_all_product_data
-</span><span class='doccomment'>//!		&quot;:id&quot; =&gt; {
-</span><span class='doccomment'>//!			Get: show_product,
-</span><span class='doccomment'>//!			Post | Delete: edit_product,
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!			&quot;json&quot; =&gt; Get: send_product_data
-</span><span class='doccomment'>//!		}
-</span><span class='doccomment'>//!	}
-</span><span class='doccomment'>//!};
-</span><span class='doccomment'>//!
-</span><span class='doccomment'>//!let router = Router::from_routes(routes);
-</span><span class='doccomment'>//!```
-</span>
+<span class='doccomment'>//!This crate provides some helpful macros for rustful, including `router!` and `routes!`.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!#`router!`</span>
+<span class='doccomment'>//!The `router!` macro generates a `Router` containing the provided handlers and routing tree.</span>
+<span class='doccomment'>//!This can be useful to lower the risk of typing errors, among other things.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!##Example 1</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!```rust</span>
+<span class='doccomment'>//!#![feature(phase)]</span>
+<span class='doccomment'>//!#[phase(plugin)]</span>
+<span class='doccomment'>//!extern crate rustful_macros;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!extern crate rustful;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!...</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!let router = router!{</span>
+<span class='doccomment'>//!	&quot;/about&quot; =&gt; Get: about_us,</span>
+<span class='doccomment'>//!	&quot;/user/:user&quot; =&gt; Get: show_user,</span>
+<span class='doccomment'>//!	&quot;/product/:name&quot; =&gt; Get: show_product,</span>
+<span class='doccomment'>//!	&quot;/*&quot; =&gt; Get: show_error,</span>
+<span class='doccomment'>//!	&quot;/&quot; =&gt; Get: show_welcome</span>
+<span class='doccomment'>//!};</span>
+<span class='doccomment'>//!```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!##Example 2</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!```rust</span>
+<span class='doccomment'>//!#![feature(phase)]</span>
+<span class='doccomment'>//!#[phase(plugin)]</span>
+<span class='doccomment'>//!extern crate rustful_macros;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!extern crate rustful;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!...</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!let router = router!{</span>
+<span class='doccomment'>//!	&quot;/&quot; =&gt; Get: show_home,</span>
+<span class='doccomment'>//!	&quot;home&quot; =&gt; Get: show_home,</span>
+<span class='doccomment'>//!	&quot;user/:username&quot; =&gt; {Get: show_user, Post: save_user},</span>
+<span class='doccomment'>//!	&quot;product&quot; =&gt; {</span>
+<span class='doccomment'>//!		Get: show_all_products,</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!		&quot;json&quot; =&gt; Get: send_all_product_data</span>
+<span class='doccomment'>//!		&quot;:id&quot; =&gt; {</span>
+<span class='doccomment'>//!			Get: show_product,</span>
+<span class='doccomment'>//!			Post | Delete: edit_product,</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!			&quot;json&quot; =&gt; Get: send_product_data</span>
+<span class='doccomment'>//!		}</span>
+<span class='doccomment'>//!	}</span>
+<span class='doccomment'>//!};</span>
+<span class='doccomment'>//!```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!#`routes!`</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!The `routes!` macro generates a vector of routes, which can be used to create a `Router`.</span>
+<span class='doccomment'>//!It has the same syntax as `routes!`.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!```rust</span>
+<span class='doccomment'>//!#![feature(phase)]</span>
+<span class='doccomment'>//!#[phase(plugin)]</span>
+<span class='doccomment'>//!extern crate rustful_macros;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!extern crate rustful;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!...</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!let routes = routes!{</span>
+<span class='doccomment'>//!	&quot;/&quot; =&gt; Get: show_home,</span>
+<span class='doccomment'>//!	&quot;home&quot; =&gt; Get: show_home,</span>
+<span class='doccomment'>//!	&quot;user/:username&quot; =&gt; {Get: show_user, Post: save_user},</span>
+<span class='doccomment'>//!	&quot;product&quot; =&gt; {</span>
+<span class='doccomment'>//!		Get: show_all_products,</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!		&quot;json&quot; =&gt; Get: send_all_product_data</span>
+<span class='doccomment'>//!		&quot;:id&quot; =&gt; {</span>
+<span class='doccomment'>//!			Get: show_product,</span>
+<span class='doccomment'>//!			Post | Delete: edit_product,</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!			&quot;json&quot; =&gt; Get: send_product_data</span>
+<span class='doccomment'>//!		}</span>
+<span class='doccomment'>//!	}</span>
+<span class='doccomment'>//!};</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!let router = Router::from_routes(routes);</span>
+<span class='doccomment'>//!```</span>
+
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>syntax</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc</span>;
 
@@ -647,8 +647,8 @@ response.headers.content_type = content_type!(&quot;application&quot;, &quot;oct
 ```
 response.headers.content_type = content_type!(&quot;image&quot;, &quot;png&quot;);
 ```
-**/
-</span><span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
+**/</span>
+<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>content_type</span>(
 	(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> ({
 		<span class='prelude-val'>Some</span>(::<span class='ident'>http</span>::<span class='ident'>headers</span>::<span class='ident'>content_type</span>::<span class='ident'>MediaType</span> {
@@ -680,9 +680,9 @@ response.headers.content_type = content_type!(&quot;image&quot;, &quot;png&quot;
                 <dd>Show this help dialog</dd>
                 <dt>S</dt>
                 <dd>Focus the search field</dd>
-                <dt>&uarr;</dt>
+                <dt>&larrb;</dt>
                 <dd>Move up in search results</dd>
-                <dt>&darr;</dt>
+                <dt>&rarrb;</dt>
                 <dd>Move down in search results</dd>
                 <dt>&#9166;</dt>
                 <dd>Go to active search result</dd>

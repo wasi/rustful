@@ -31,7 +31,7 @@
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Search documentation..."
+                       placeholder="Click or press 'S' to search, '?' for more options..."
                        type="search">
             </div>
         </form>
@@ -246,8 +246,8 @@
 <span id='207'>207</span>
 <span id='208'>208</span>
 </pre><pre class='rust '>
-<span class='doccomment'>//!Utility traits and implementations for cached resources.
-</span>
+<span class='doccomment'>//!Utility traits and implementations for cached resources.</span>
+
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>File</span>, <span class='ident'>IoResult</span>};
 
 <span class='kw'>use</span> <span class='ident'>time</span>;
@@ -255,25 +255,25 @@
 
 <span class='kw'>use</span> <span class='ident'>sync</span>::<span class='ident'>RWLock</span>;
 
-<span class='doccomment'>///This trait provides functions for handling cached resources.
-</span><span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>CachedValue</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///`do_this` with the cached value, without loading or reloading it.
-</span>	<span class='kw'>fn</span> <span class='ident'>use_current_value</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>do_this</span>: <span class='op'>|</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span><span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>R</span>;
+<span class='doccomment'>///This trait provides functions for handling cached resources.</span>
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>CachedValue</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+	<span class='doccomment'>///`do_this` with the cached value, without loading or reloading it.</span>
+	<span class='kw'>fn</span> <span class='ident'>use_current_value</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>do_this</span>: <span class='op'>|</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span><span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>R</span>;
 
-	<span class='doccomment'>///Load the cached value.
-</span>	<span class='kw'>fn</span> <span class='ident'>load</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
+	<span class='doccomment'>///Load the cached value.</span>
+	<span class='kw'>fn</span> <span class='ident'>load</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
 
-	<span class='doccomment'>///Free the cached value.
-</span>	<span class='kw'>fn</span> <span class='ident'>free</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
+	<span class='doccomment'>///Free the cached value.</span>
+	<span class='kw'>fn</span> <span class='ident'>free</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
 
-	<span class='doccomment'>///Check if the cached value has expired.
-</span>	<span class='kw'>fn</span> <span class='ident'>expired</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+	<span class='doccomment'>///Check if the cached value has expired.</span>
+	<span class='kw'>fn</span> <span class='ident'>expired</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
-	<span class='doccomment'>///Check if the cached value is unused and should be removed.
-</span>	<span class='kw'>fn</span> <span class='ident'>unused</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+	<span class='doccomment'>///Check if the cached value is unused and should be removed.</span>
+	<span class='kw'>fn</span> <span class='ident'>unused</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
-	<span class='doccomment'>///Reload the cached value if it has expired and `do_this` with it.
-</span>	<span class='kw'>fn</span> <span class='ident'>use_value</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>do_this</span>: <span class='op'>|</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span><span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>R</span> {
+	<span class='doccomment'>///Reload the cached value if it has expired and `do_this` with it.</span>
+	<span class='kw'>fn</span> <span class='ident'>use_value</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>do_this</span>: <span class='op'>|</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span><span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>R</span> {
 		<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>expired</span>() {
 			<span class='self'>self</span>.<span class='ident'>load</span>();
 		}
@@ -281,8 +281,8 @@
 		<span class='self'>self</span>.<span class='ident'>use_current_value</span>(<span class='ident'>do_this</span>)
 	}
 
-	<span class='doccomment'>///Free the cached value if it&#39;s unused.
-</span>	<span class='kw'>fn</span> <span class='ident'>clean</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
+	<span class='doccomment'>///Free the cached value if it&#39;s unused.</span>
+	<span class='kw'>fn</span> <span class='ident'>clean</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
 		<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>unused</span>() {
 			<span class='self'>self</span>.<span class='ident'>free</span>();
 		}
@@ -290,10 +290,10 @@
 }
 
 
-<span class='doccomment'>///Cached raw file content.
-</span><span class='doccomment'>///
-</span><span class='doccomment'>///The whole file will be loaded when accessed.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>CachedFile</span> {
+<span class='doccomment'>///Cached raw file content.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///The whole file will be loaded when accessed.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>CachedFile</span> {
 	<span class='ident'>path</span>: <span class='ident'>Path</span>,
 	<span class='ident'>file</span>: <span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
 	<span class='ident'>modified</span>: <span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>u64</span><span class='op'>&gt;</span>,
@@ -302,8 +302,8 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>CachedFile</span> {
-	<span class='doccomment'>///Creates a new `CachedFile` which will be freed `unused_after` seconds after the latest access.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>path</span>: <span class='ident'>Path</span>, <span class='ident'>unused_after</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>CachedFile</span> {
+	<span class='doccomment'>///Creates a new `CachedFile` which will be freed `unused_after` seconds after the latest access.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>path</span>: <span class='ident'>Path</span>, <span class='ident'>unused_after</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>CachedFile</span> {
 		<span class='ident'>CachedFile</span> {
 			<span class='ident'>path</span>: <span class='ident'>path</span>,
 			<span class='ident'>file</span>: <span class='ident'>RWLock</span>::<span class='ident'>new</span>(<span class='prelude-val'>None</span>),
@@ -358,10 +358,10 @@
 }
 
 
-<span class='doccomment'>///A processed cached file.
-</span><span class='doccomment'>///
-</span><span class='doccomment'>///The file will be processed by a provided function when loaded and the result will be stored.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='doccomment'>///A processed cached file.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///The file will be processed by a provided function when loaded and the result will be stored.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
 	<span class='ident'>path</span>: <span class='ident'>Path</span>,
 	<span class='ident'>file</span>: <span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
 	<span class='ident'>modified</span>: <span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>u64</span><span class='op'>&gt;</span>,
@@ -371,9 +371,9 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span><span class='op'>+</span><span class='ident'>Share</span><span class='op'>&gt;</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///Creates a new `CachedProcessedFile` which will be freed `unused_after` seconds after the latest access.
-</span>	<span class='doccomment'>///The file will be processed by the provided `processor` function each time it&#39;s loaded.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>path</span>: <span class='ident'>Path</span>, <span class='ident'>unused_after</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>, <span class='ident'>processor</span>: <span class='kw'>fn</span>(<span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>File</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+	<span class='doccomment'>///Creates a new `CachedProcessedFile` which will be freed `unused_after` seconds after the latest access.</span>
+	<span class='doccomment'>///The file will be processed by the provided `processor` function each time it&#39;s loaded.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>path</span>: <span class='ident'>Path</span>, <span class='ident'>unused_after</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>, <span class='ident'>processor</span>: <span class='kw'>fn</span>(<span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>File</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
 		<span class='ident'>CachedProcessedFile</span> {
 			<span class='ident'>path</span>: <span class='ident'>path</span>,
 			<span class='ident'>file</span>: <span class='ident'>RWLock</span>::<span class='ident'>new</span>(<span class='prelude-val'>None</span>),
@@ -468,9 +468,9 @@
                 <dd>Show this help dialog</dd>
                 <dt>S</dt>
                 <dd>Focus the search field</dd>
-                <dt>&uarr;</dt>
+                <dt>&larrb;</dt>
                 <dd>Move up in search results</dd>
-                <dt>&darr;</dt>
+                <dt>&rarrb;</dt>
                 <dd>Move down in search results</dd>
                 <dt>&#9166;</dt>
                 <dd>Go to active search result</dd>

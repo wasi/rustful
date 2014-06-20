@@ -31,14 +31,14 @@
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Search documentation..."
+                       placeholder="Click or press 'S' to search, '?' for more options..."
                        type="search">
             </div>
         </form>
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'>Struct <a href='index.html'>rustful</a>::<a class='struct' href=''>Response</a><a class='source' id='src-3123' href='../src/rustful/src/lib.rs.html#364-372'>[src]</a></h1>
+<h1 class='fqn'>Struct <a href='index.html'>rustful</a>::<a class='struct' href=''>Response</a><a class='source' id='src-3124' href='../src/rustful/src/lib.rs.html#365-373'>[src]</a></h1>
 <pre class='rust struct'>pub struct Response&lt;'a, 'b&gt; {
     pub headers: <a class='struct' href='http://www.rust-ci.org/chris-morgan/rust-http/doc/http/headers/response/struct.HeaderCollection.html' title='http::headers::response::HeaderCollection'>HeaderCollection</a>,
     pub status: <a class='type' href='http://www.rust-ci.org/chris-morgan/rust-http/doc/http/status/type.Status.html' title='http::status::Status'>Status</a>,
@@ -48,16 +48,18 @@
 <table><tr><td id='structfield.headers'><code>headers</code></td><td><div class='docblock'><p>The HTTP response headers. Date, content type (text/plain) and server is automatically set.</p>
 </div></td></tr><tr><td id='structfield.status'><code>status</code></td><td><div class='docblock'><p>The HTTP response status. Ok (200) is default.</p>
 </div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, 'b&gt; <a class='struct' href='../rustful/struct.Response.html' title='rustful::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='methods'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;'a, 'b&gt;(writer: &amp;'a mut <a class='struct' href='http://www.rust-ci.org/chris-morgan/rust-http/doc/http/server/response/struct.ResponseWriter.html' title='http::server::response::ResponseWriter'>ResponseWriter</a>&lt;'b&gt;) -&gt; <a class='struct' href='../rustful/struct.Response.html' title='rustful::Response'>Response</a>&lt;'a, 'b&gt;</code></h4>
-<h4 id='method.begin' class='method'><code>fn <a href='#method.begin' class='fnname'>begin</a>(&amp;mut self)</code></h4>
+<h4 id='method.send' class='method'><code>fn <a href='#method.send' class='fnname'>send</a>&lt;S: <a class='trait' href='http://doc.rust-lang.org/std/path/trait.BytesContainer.html' title='std::path::BytesContainer'>BytesContainer</a>&gt;(&amp;mut self, content: S) -&gt; <a class='type' href='http://doc.rust-lang.org/std/io/type.IoResult.html' title='std::io::IoResult'>IoResult</a>&lt;()&gt;</code></h4>
+<div class='docblock'><p>Writes a string or any other <code>BytesContainer</code> to the client.
+The headers will be written the first time <code>send()</code> is called.</p>
+</div><h4 id='method.begin' class='method'><code>fn <a href='#method.begin' class='fnname'>begin</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Start writing the response. Headers and status can not be changed after it has been called.</p>
 
-<p>This method will be called automatically by <code>write()</code> and <code>end()</code>, if it hasn&#39;t been called before.
+<p>This method will be called automatically by <code>send()</code> and <code>end()</code>, if it hasn&#39;t been called before.
 It can only be called once.</p>
 </div><h4 id='method.end' class='method'><code>fn <a href='#method.end' class='fnname'>end</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Finish writing the response.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, 'b&gt; <a class='trait' href='http://doc.rust-lang.org/std/io/trait.Writer.html' title='std::io::Writer'>Writer</a> for <a class='struct' href='../rustful/struct.Response.html' title='rustful::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='methods'><h4 id='method.write' class='method'><code>fn <a href='#method.write' class='fnname'>write</a>(&amp;mut self, content: &amp;<a href='http://doc.rust-lang.org/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/std/primitive.u8.html'>u8</a>]</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/std/io/type.IoResult.html' title='std::io::IoResult'>IoResult</a>&lt;()&gt;</code></h4>
-<div class='docblock'><p>Writes content to the client. The headers will be written the first time it&#39;s called.</p>
-</div><h4 id='method.flush' class='method'><code>fn <a href='#tymethod.flush' class='fnname'>flush</a>(&amp;mut self) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
+<h4 id='method.flush' class='method'><code>fn <a href='#tymethod.flush' class='fnname'>flush</a>(&amp;mut self) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
 <h4 id='method.write_fmt' class='method'><code>fn <a href='#tymethod.write_fmt' class='fnname'>write_fmt</a>(&amp;mut self, fmt: &amp;<a class='struct' href='http://doc.rust-lang.org/core/fmt/struct.Arguments.html' title='core::fmt::Arguments'>Arguments</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
 <h4 id='method.write_str' class='method'><code>fn <a href='#tymethod.write_str' class='fnname'>write_str</a>(&amp;mut self, s: &amp;<a href='http://doc.rust-lang.org/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
 <h4 id='method.write_line' class='method'><code>fn <a href='#tymethod.write_line' class='fnname'>write_line</a>(&amp;mut self, s: &amp;<a href='http://doc.rust-lang.org/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/core/result/type.Result.html' title='core::result::Result'>Result</a>&lt;(), <a class='struct' href='http://doc.rust-lang.org/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt;</code></h4>
@@ -100,9 +102,9 @@ It can only be called once.</p>
                 <dd>Show this help dialog</dd>
                 <dt>S</dt>
                 <dd>Focus the search field</dd>
-                <dt>&uarr;</dt>
+                <dt>&larrb;</dt>
                 <dd>Move up in search results</dd>
-                <dt>&darr;</dt>
+                <dt>&rarrb;</dt>
                 <dd>Move down in search results</dd>
                 <dt>&#9166;</dt>
                 <dd>Go to active search result</dd>

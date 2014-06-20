@@ -31,7 +31,7 @@
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Search documentation..."
+                       placeholder="Click or press 'S' to search, '?' for more options..."
                        type="search">
             </div>
         </form>
@@ -535,6 +535,12 @@
 <span id='496'>496</span>
 <span id='497'>497</span>
 <span id='498'>498</span>
+<span id='499'>499</span>
+<span id='500'>500</span>
+<span id='501'>501</span>
+<span id='502'>502</span>
+<span id='503'>503</span>
+<span id='504'>504</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_id</span> <span class='op'>=</span> <span class='string'>&quot;rustful#0.1-pre&quot;</span>]</span>
 
@@ -567,6 +573,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>uint</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>BufReader</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hashmap</span>::<span class='ident'>HashMap</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>BytesContainer</span>;
 
 <span class='kw'>use</span> <span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>RWLock</span>};
 
@@ -578,8 +585,8 @@
 
 
 
-<span class='doccomment'>///A trait for request handlers.
-</span><span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> {
+<span class='doccomment'>///A trait for request handlers.</span>
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> {
 	<span class='kw'>fn</span> <span class='ident'>handle_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>request</span>: <span class='kw-2'>&amp;</span><span class='ident'>Request</span>, <span class='ident'>cache</span>: <span class='kw-2'>&amp;</span><span class='ident'>C</span>, <span class='ident'>response</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Response</span>);
 }
 
@@ -597,10 +604,10 @@
 
 
 
-<span class='doccomment'>///A trait for cache storage.
-</span><span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Cache</span> {
-	<span class='doccomment'>///Free all the unused cached resources.
-</span>	<span class='kw'>fn</span> <span class='ident'>free_unused</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
+<span class='doccomment'>///A trait for cache storage.</span>
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Cache</span> {
+	<span class='doccomment'>///Free all the unused cached resources.</span>
+	<span class='kw'>fn</span> <span class='ident'>free_unused</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>);
 }
 
 <span class='kw'>impl</span> <span class='ident'>Cache</span> <span class='kw'>for</span> () {
@@ -609,25 +616,25 @@
 
 
 
-<span class='doccomment'>///Receives the HTTP requests and passes them on to handlers.
-</span><span class='doccomment'>///
-</span><span class='doccomment'>///```rust
-</span><span class='doccomment'>///# use rustful::server::Server;
-</span><span class='doccomment'>///# use rustful::router::Router;
-</span><span class='doccomment'>///# let routes = [];
-</span><span class='doccomment'>///let server = Server::new(8080, Router::from_routes(routes));
-</span><span class='doccomment'>///
-</span><span class='doccomment'>///server.run();
-</span><span class='doccomment'>///```
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///A router with response handlers
-</span>	<span class='ident'>handlers</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;&gt;</span>,
+<span class='doccomment'>///Receives the HTTP requests and passes them on to handlers.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///```rust</span>
+<span class='doccomment'>///# use rustful::server::Server;</span>
+<span class='doccomment'>///# use rustful::router::Router;</span>
+<span class='doccomment'>///# let routes = [];</span>
+<span class='doccomment'>///let server = Server::new(8080, Router::from_routes(routes));</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///server.run();</span>
+<span class='doccomment'>///```</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+	<span class='doccomment'>///A router with response handlers</span>
+	<span class='ident'>handlers</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;&gt;</span>,
 
-	<span class='doccomment'>///The port where the server will listen for requests
-</span>	<span class='ident'>port</span>: <span class='ident'>Port</span>,
+	<span class='doccomment'>///The port where the server will listen for requests</span>
+	<span class='ident'>port</span>: <span class='ident'>Port</span>,
 
-	<span class='doccomment'>///Host address
-</span>	<span class='ident'>host</span>: <span class='ident'>IpAddr</span>,
+	<span class='doccomment'>///Host address</span>
+	<span class='ident'>host</span>: <span class='ident'>IpAddr</span>,
 
 	<span class='ident'>server</span>: <span class='ident'>String</span>,
 	<span class='ident'>content_type</span>: <span class='ident'>MediaType</span>,
@@ -638,8 +645,8 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Share</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, ()<span class='op'>&gt;</span> {
-	<span class='doccomment'>///Create a new `Server` which will listen on the provided port and host address `0.0.0.0`.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>port</span>: <span class='ident'>Port</span>, <span class='ident'>handlers</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, ()<span class='op'>&gt;</span> {
+	<span class='doccomment'>///Create a new `Server` which will listen on the provided port and host address `0.0.0.0`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>port</span>: <span class='ident'>Port</span>, <span class='ident'>handlers</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, ()<span class='op'>&gt;</span> {
 		<span class='ident'>Server</span> {
 			<span class='ident'>handlers</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>handlers</span>),
 			<span class='ident'>port</span>: <span class='ident'>port</span>,
@@ -658,11 +665,11 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Share</span>, <span class='ident'>C</span>: <span class='ident'>Cache</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Share</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///Creates a new `Server` with a resource cache.
-</span>	<span class='doccomment'>///
-</span>	<span class='doccomment'>///The server will listen listen on the provided port and host address `0.0.0.0`.
-</span>	<span class='doccomment'>///Cache cleaning is disabled by default. 
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_cache</span>(<span class='ident'>port</span>: <span class='ident'>Port</span>, <span class='ident'>cache</span>: <span class='ident'>C</span>, <span class='ident'>handlers</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+	<span class='doccomment'>///Creates a new `Server` with a resource cache.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>///The server will listen listen on the provided port and host address `0.0.0.0`.</span>
+	<span class='doccomment'>///Cache cleaning is disabled by default. </span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_cache</span>(<span class='ident'>port</span>: <span class='ident'>Port</span>, <span class='ident'>cache</span>: <span class='ident'>C</span>, <span class='ident'>handlers</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
 		<span class='ident'>Server</span> {
 			<span class='ident'>handlers</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>handlers</span>),
 			<span class='ident'>port</span>: <span class='ident'>port</span>,
@@ -679,33 +686,33 @@
 		}
 	}
 
-	<span class='doccomment'>///Start the server and run forever.
-</span>	<span class='doccomment'>///This will only return if the initial connection fails.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) {
+	<span class='doccomment'>///Start the server and run forever.</span>
+	<span class='doccomment'>///This will only return if the initial connection fails.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) {
 		<span class='self'>self</span>.<span class='ident'>serve_forever</span>();
 	}
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///Change the host address.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_host</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>host</span>: <span class='ident'>IpAddr</span>) {
+	<span class='doccomment'>///Change the host address.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_host</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>host</span>: <span class='ident'>IpAddr</span>) {
 		<span class='self'>self</span>.<span class='ident'>host</span> <span class='op'>=</span> <span class='ident'>host</span>;
 	}
 
-	<span class='doccomment'>///Set the minimal number of seconds between each cache clean.
-</span>	<span class='doccomment'>///
-</span>	<span class='doccomment'>///Passing `None` disables cache cleaning.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_clean_interval</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>interval</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>) {
+	<span class='doccomment'>///Set the minimal number of seconds between each cache clean.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>///Passing `None` disables cache cleaning.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_clean_interval</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>interval</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>) {
 		<span class='self'>self</span>.<span class='ident'>cache_clean_interval</span> <span class='op'>=</span> <span class='ident'>interval</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>i64</span>);
 	}
 
-	<span class='doccomment'>///Change the server part of the user agent string.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_server_name</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>String</span>) {
+	<span class='doccomment'>///Change the server part of the user agent string.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_server_name</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>String</span>) {
 		<span class='self'>self</span>.<span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>name</span>;
 	}
 
-	<span class='doccomment'>///Change the default content type.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_content_type</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content_type</span>: <span class='ident'>MediaType</span>) {
+	<span class='doccomment'>///Change the default content type.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_content_type</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content_type</span>: <span class='ident'>MediaType</span>) {
 		<span class='self'>self</span>.<span class='ident'>content_type</span> <span class='op'>=</span> <span class='ident'>content_type</span>;
 	}
 }
@@ -870,41 +877,41 @@
 }
 
 
-<span class='doccomment'>///A container for all the request data, including get, set and path variables.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///Headers from the HTTP request
-</span>	<span class='kw'>pub</span> <span class='ident'>headers</span>: <span class='ident'>headers</span>::<span class='ident'>request</span>::<span class='ident'>HeaderCollection</span>,
+<span class='doccomment'>///A container for all the request data, including get, set and path variables.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+	<span class='doccomment'>///Headers from the HTTP request</span>
+	<span class='kw'>pub</span> <span class='ident'>headers</span>: <span class='ident'>headers</span>::<span class='ident'>request</span>::<span class='ident'>HeaderCollection</span>,
 
-	<span class='doccomment'>///The HTTP method
-</span>	<span class='kw'>pub</span> <span class='ident'>method</span>: <span class='ident'>Method</span>,
+	<span class='doccomment'>///The HTTP method</span>
+	<span class='kw'>pub</span> <span class='ident'>method</span>: <span class='ident'>Method</span>,
 
-	<span class='doccomment'>///The requested path
-</span>	<span class='kw'>pub</span> <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
+	<span class='doccomment'>///The requested path</span>
+	<span class='kw'>pub</span> <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
 
-	<span class='doccomment'>///Route variables
-</span>	<span class='kw'>pub</span> <span class='ident'>variables</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
+	<span class='doccomment'>///Route variables</span>
+	<span class='kw'>pub</span> <span class='ident'>variables</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 
-	<span class='doccomment'>///POST variables
-</span>	<span class='kw'>pub</span> <span class='ident'>post</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
+	<span class='doccomment'>///POST variables</span>
+	<span class='kw'>pub</span> <span class='ident'>post</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 
-	<span class='doccomment'>///Query variables from the path
-</span>	<span class='kw'>pub</span> <span class='ident'>query</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
+	<span class='doccomment'>///Query variables from the path</span>
+	<span class='kw'>pub</span> <span class='ident'>query</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 
-	<span class='doccomment'>///The fragment part of the URL (after #), if provided
-</span>	<span class='kw'>pub</span> <span class='ident'>fragment</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span><span class='op'>&gt;</span>,
+	<span class='doccomment'>///The fragment part of the URL (after #), if provided</span>
+	<span class='kw'>pub</span> <span class='ident'>fragment</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span><span class='op'>&gt;</span>,
 
-	<span class='doccomment'>///The raw body part of the request
-</span>	<span class='kw'>pub</span> <span class='ident'>body</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>
+	<span class='doccomment'>///The raw body part of the request</span>
+	<span class='kw'>pub</span> <span class='ident'>body</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>
 }
 
 
-<span class='doccomment'>///An interface for sending HTTP response data to the client.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///The HTTP response headers. Date, content type (text/plain) and server is automatically set.
-</span>	<span class='kw'>pub</span> <span class='ident'>headers</span>: <span class='ident'>headers</span>::<span class='ident'>response</span>::<span class='ident'>HeaderCollection</span>,
+<span class='doccomment'>///An interface for sending HTTP response data to the client.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
+	<span class='doccomment'>///The HTTP response headers. Date, content type (text/plain) and server is automatically set.</span>
+	<span class='kw'>pub</span> <span class='ident'>headers</span>: <span class='ident'>headers</span>::<span class='ident'>response</span>::<span class='ident'>HeaderCollection</span>,
 
-	<span class='doccomment'>///The HTTP response status. Ok (200) is default.
-</span>	<span class='kw'>pub</span> <span class='ident'>status</span>: <span class='ident'>Status</span>,
+	<span class='doccomment'>///The HTTP response status. Ok (200) is default.</span>
+	<span class='kw'>pub</span> <span class='ident'>status</span>: <span class='ident'>Status</span>,
 	<span class='ident'>writer</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>ResponseWriter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>,
 	<span class='ident'>started_writing</span>: <span class='ident'>bool</span>
 }
@@ -919,11 +926,17 @@
 		}
 	}
 
-	<span class='doccomment'>///Start writing the response. Headers and status can not be changed after it has been called.
-</span>	<span class='doccomment'>///
-</span>	<span class='doccomment'>///This method will be called automatically by `write()` and `end()`, if it hasn&#39;t been called before.
-</span>	<span class='doccomment'>///It can only be called once.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+	<span class='doccomment'>///Writes a string or any other `BytesContainer` to the client.</span>
+	<span class='doccomment'>///The headers will be written the first time `send()` is called.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>BytesContainer</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>write</span>(<span class='ident'>content</span>.<span class='ident'>container_as_bytes</span>())
+	}
+
+	<span class='doccomment'>///Start writing the response. Headers and status can not be changed after it has been called.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>///This method will be called automatically by `send()` and `end()`, if it hasn&#39;t been called before.</span>
+	<span class='doccomment'>///It can only be called once.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
 		<span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>started_writing</span> {
 			<span class='self'>self</span>.<span class='ident'>started_writing</span> <span class='op'>=</span> <span class='boolval'>true</span>;<span class='comment'>
 			//TODO: Intercept headers and status
@@ -935,8 +948,8 @@
 		</span>}
 	}
 
-	<span class='doccomment'>///Finish writing the response.
-</span>	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+	<span class='doccomment'>///Finish writing the response.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
 		<span class='self'>self</span>.<span class='ident'>begin</span>();<span class='comment'>
 
 		//TODO: End interception
@@ -944,8 +957,7 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>Writer</span> <span class='kw'>for</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///Writes content to the client. The headers will be written the first time it&#39;s called.
-</span>	<span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+	<span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
 		<span class='self'>self</span>.<span class='ident'>begin</span>();<span class='comment'>
 
 		//TODO: Intercept content
@@ -1048,9 +1060,9 @@
                 <dd>Show this help dialog</dd>
                 <dt>S</dt>
                 <dd>Focus the search field</dd>
-                <dt>&uarr;</dt>
+                <dt>&larrb;</dt>
                 <dd>Move up in search results</dd>
-                <dt>&darr;</dt>
+                <dt>&rarrb;</dt>
                 <dd>Move down in search results</dd>
                 <dt>&#9166;</dt>
                 <dd>Go to active search result</dd>
