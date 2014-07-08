@@ -592,7 +592,7 @@
 <span id='550'>550</span>
 <span id='551'>551</span>
 </pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_id</span> <span class='op'>=</span> <span class='string'>&quot;rustful#0.1-pre&quot;</span>]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>comment</span> <span class='op'>=</span> <span class='string'>&quot;RESTful web framework&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>license</span> <span class='op'>=</span> <span class='string'>&quot;MIT&quot;</span>]</span>
@@ -825,9 +825,9 @@
 		<span class='kw'>let</span> <span class='ident'>path_components</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>request_uri</span> {
 			<span class='ident'>AbsoluteUri</span>(<span class='ident'>url</span>) <span class='op'>=&gt;</span> {
 				<span class='prelude-val'>Some</span>((
-					<span class='ident'>url</span>.<span class='ident'>path</span>,
-					<span class='ident'>url</span>.<span class='ident'>query</span>.<span class='ident'>move_iter</span>().<span class='ident'>collect</span>(),
-					<span class='ident'>url</span>.<span class='ident'>fragment</span>
+					<span class='ident'>url</span>.<span class='ident'>path</span>.<span class='ident'>path</span>,
+					<span class='ident'>url</span>.<span class='ident'>path</span>.<span class='ident'>query</span>.<span class='ident'>move_iter</span>().<span class='ident'>collect</span>(),
+					<span class='ident'>url</span>.<span class='ident'>path</span>.<span class='ident'>fragment</span>
 				))
 			},
 			<span class='ident'>AbsolutePath</span>(<span class='ident'>path</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>parse_path</span>(<span class='ident'>path</span>)),
