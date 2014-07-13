@@ -352,6 +352,49 @@
 <span id='312'>312</span>
 <span id='313'>313</span>
 <span id='314'>314</span>
+<span id='315'>315</span>
+<span id='316'>316</span>
+<span id='317'>317</span>
+<span id='318'>318</span>
+<span id='319'>319</span>
+<span id='320'>320</span>
+<span id='321'>321</span>
+<span id='322'>322</span>
+<span id='323'>323</span>
+<span id='324'>324</span>
+<span id='325'>325</span>
+<span id='326'>326</span>
+<span id='327'>327</span>
+<span id='328'>328</span>
+<span id='329'>329</span>
+<span id='330'>330</span>
+<span id='331'>331</span>
+<span id='332'>332</span>
+<span id='333'>333</span>
+<span id='334'>334</span>
+<span id='335'>335</span>
+<span id='336'>336</span>
+<span id='337'>337</span>
+<span id='338'>338</span>
+<span id='339'>339</span>
+<span id='340'>340</span>
+<span id='341'>341</span>
+<span id='342'>342</span>
+<span id='343'>343</span>
+<span id='344'>344</span>
+<span id='345'>345</span>
+<span id='346'>346</span>
+<span id='347'>347</span>
+<span id='348'>348</span>
+<span id='349'>349</span>
+<span id='350'>350</span>
+<span id='351'>351</span>
+<span id='352'>352</span>
+<span id='353'>353</span>
+<span id='354'>354</span>
+<span id='355'>355</span>
+<span id='356'>356</span>
+<span id='357'>357</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful_macros&quot;</span>]</span>
 
@@ -666,6 +709,49 @@ response.headers.content_type = content_type!(&quot;image&quot;, &quot;png&quot;
 			<span class='ident'>parameters</span>: <span class='macro'>vec</span><span class='macro'>!</span>( $( (<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>), <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>)) ),<span class='op'>+</span> )
 		})
 	});
+)
+
+
+<span class='doccomment'>/**
+A macro for callig `send` in response and aborting the handle function if it fails.
+
+This macro will print an error to `stdout` and set the response status to `500 Internal Server Error` if the send fails.
+The response status may or may not be written to the client, depending on if the connection is
+broken or not, or if the headers have already been written.
+**/</span>
+<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>try_send</span>(
+	(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
+		<span class='kw'>match</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>.<span class='ident'>send</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>) {
+			::<span class='ident'>rustful</span>::<span class='ident'>Success</span> <span class='op'>=&gt;</span> {},
+			::<span class='ident'>rustful</span>::<span class='ident'>IoError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
+				<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;IO error: {}&quot;</span>, <span class='ident'>e</span>);
+				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>http</span>::<span class='ident'>status</span>::<span class='ident'>InternalServerError</span>;
+				<span class='kw'>return</span>;
+			},
+			::<span class='ident'>rustful</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
+				<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;plugin error: {}&quot;</span>, <span class='ident'>e</span>);
+				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>http</span>::<span class='ident'>status</span>::<span class='ident'>InternalServerError</span>;
+				<span class='kw'>return</span>;
+			}
+		}
+	);
+
+	(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>:<span class='ident'>expr</span> <span class='kw'>while</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>what</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
+		<span class='kw'>match</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>.<span class='ident'>send</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>content</span>) {
+			::<span class='ident'>rustful</span>::<span class='ident'>Success</span> <span class='op'>=&gt;</span> {},
+			::<span class='ident'>rustful</span>::<span class='ident'>IoError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
+				<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;IO error while {}: {}&quot;</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>what</span>, <span class='ident'>e</span>);
+				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>http</span>::<span class='ident'>status</span>::<span class='ident'>InternalServerError</span>;
+				<span class='kw'>return</span>;
+			},
+			::<span class='ident'>rustful</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
+				<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;plugin error while {}: {}&quot;</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>what</span>, <span class='ident'>e</span>);
+				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>response</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>http</span>::<span class='ident'>status</span>::<span class='ident'>InternalServerError</span>;
+				<span class='kw'>return</span>;
+			}
+		}
+	)
 )
 </pre>
 </section>

@@ -39,7 +39,7 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Crate <a class='mod' href=''>rustful</a><span class='out-of-band'><a href='stability.html'>[stability dashboard]</a> <a id='src-0' href='../src/rustful/src/lib.rs.html#1-551'>[src]</a></span></h1>
+<h1 class='fqn'>Crate <a class='mod' href=''>rustful</a><span class='out-of-band'><a href='stability.html'>[stability dashboard]</a> <a id='src-0' href='../src/rustful/src/lib.rs.html#1-692'>[src]</a></span></h1>
 <h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub use router::<a class='struct' href='../rustful/router/struct.Router.html' title='rustful::router::Router'>Router</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
@@ -81,9 +81,23 @@
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                     <tr>
-                        <td><a class='stability Experimental' title='Experimental'></a><a class='type' href='type.RequestResult.html'
-                               title='rustful::RequestResult'>RequestResult</a></td>
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='type' href='type.RequestAction.html'
+                               title='rustful::RequestAction'>RequestAction</a></td>
                         <td class='docblock short'><p>The result from a <code>RequestPlugin</code>.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='type' href='type.ResponseAction.html'
+                               title='rustful::ResponseAction'>ResponseAction</a></td>
+                        <td class='docblock short'><p>The result from a <code>ResponsePlugin</code>.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='type' href='type.ResponseResult.html'
+                               title='rustful::ResponseResult'>ResponseResult</a></td>
+                        <td class='docblock short'><p>The result of a response action.</p>
 </td>
                     </tr>
                 </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
@@ -106,6 +120,13 @@
                         <td><a class='stability Experimental' title='Experimental'></a><a class='trait' href='trait.RequestPlugin.html'
                                title='rustful::RequestPlugin'>RequestPlugin</a></td>
                         <td class='docblock short'><p>A trait for request plugins.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='trait' href='trait.ResponsePlugin.html'
+                               title='rustful::ResponsePlugin'>ResponsePlugin</a></td>
+                        <td class='docblock short'><p>A trait for response plugins.</p>
 </td>
                     </tr>
                 </table></section>

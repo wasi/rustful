@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The rustful library documentation.">
 
-    <title>rustful - Stability dashboard</title>
+    <title>rustful::ResponseResult - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../main.css">
 
@@ -24,7 +24,7 @@
 
     <section class="sidebar">
         
-        <p class='location'></p>
+        <p class='location'><a href='index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='cache/index.html'>cache</a><a class='mod ' href='router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Request.html'>Request</a><a class='struct ' href='struct.Response.html'>Response</a><a class='struct ' href='struct.Server.html'>Server</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.Cache.html'>Cache</a><a class='trait ' href='trait.Handler.html'>Handler</a><a class='trait ' href='trait.RequestPlugin.html'>RequestPlugin</a><a class='trait ' href='trait.ResponsePlugin.html'>ResponsePlugin</a></div>
     </section>
 
     <nav class="sub">
@@ -38,18 +38,18 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod"><h1 class='fqn'>Stability dashboard: crate <a class='mod' href='index.html'>rustful</a></h1>
-This dashboard summarizes the stability levels for all of the public modules of
-the crate, according to the total number of items at each level in the module and its children:
-<blockquote>
-<a class='stability Stable'></a> stable,<br/>
-<a class='stability Unstable'></a> unstable,<br/>
-<a class='stability Experimental'></a> experimental,<br/>
-<a class='stability Deprecated'></a> deprecated,<br/>
-<a class='stability Unmarked'></a> unmarked
-</blockquote>
-The counts do not include methods or trait
-implementations that are visible only through a re-exported type.<table><tr><td class='summary'><a class='summary' href='index.html'>rustful</a></td><td><span class='summary Stable' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Unstable' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Experimental' style='width: 139px; display: inline-block'>&nbsp</span><span class='summary Deprecated' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Unmarked' style='width: 360px; display: inline-block'>&nbsp</span></td></tr><tr><td class='summary'><a class='summary' href='cache/index.html'>rustful::cache</a></td><td><span class='summary Stable' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Unstable' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Experimental' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Deprecated' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Unmarked' style='width: 500px; display: inline-block'>&nbsp</span></td></tr><tr><td class='summary'><a class='summary' href='router/index.html'>rustful::router</a></td><td><span class='summary Stable' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Unstable' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Experimental' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Deprecated' style='width: 0px; display: inline-block'>&nbsp</span><span class='summary Unmarked' style='width: 500px; display: inline-block'>&nbsp</span></td></tr></table></section>
+    <section id='main' class="content type">
+<h1 class='fqn'>Enum <a href='index.html'>rustful</a>::<a class='type' href=''>ResponseResult</a><a class='stability Experimental' title=''>Experimental</a><span class='out-of-band'><a id='src-1956' href='../src/rustful/src/lib.rs.html#55-64'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum ResponseResult {
+    Success,
+    PluginError(<a class='struct' href='http://doc.rust-lang.org/master/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+    IoError(<a class='struct' href='http://doc.rust-lang.org/master/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>),
+}</pre><div class='docblock'><p>The result of a response action.</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Success'><a class='stability Experimental' title='Experimental'></a><code>Success</code></td><td><div class='docblock'><p>The response action was successful.</p>
+</div></td></tr><tr><td id='variant.PluginError'><a class='stability Experimental' title='Experimental'></a><code>PluginError</code></td><td><div class='docblock'><p>A response plugin failed.</p>
+</div></td></tr><tr><td id='variant.IoError'><a class='stability Experimental' title='Experimental'></a><code>IoError</code></td><td><div class='docblock'><p>There was an IO error.</p>
+</div></td></tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

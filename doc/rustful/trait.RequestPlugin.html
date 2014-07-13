@@ -24,7 +24,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='cache/index.html'>cache</a><a class='mod ' href='router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Request.html'>Request</a><a class='struct ' href='struct.Response.html'>Response</a><a class='struct ' href='struct.Server.html'>Server</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.Cache.html'>Cache</a><a class='trait ' href='trait.Handler.html'>Handler</a><a class='trait current' href='trait.RequestPlugin.html'>RequestPlugin</a></div>
+        <p class='location'><a href='index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='cache/index.html'>cache</a><a class='mod ' href='router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Request.html'>Request</a><a class='struct ' href='struct.Response.html'>Response</a><a class='struct ' href='struct.Server.html'>Server</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.Cache.html'>Cache</a><a class='trait ' href='trait.Handler.html'>Handler</a><a class='trait current' href='trait.RequestPlugin.html'>RequestPlugin</a><a class='trait ' href='trait.ResponsePlugin.html'>ResponsePlugin</a></div>
     </section>
 
     <nav class="sub">
@@ -39,16 +39,16 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'>Trait <a href='index.html'>rustful</a>::<a class='trait' href=''>RequestPlugin</a><a class='stability Experimental' title=''>Experimental</a><span class='out-of-band'><a id='src-2082' href='../src/rustful/src/lib.rs.html#89-92'>[src]</a></span></h1>
+<h1 class='fqn'>Trait <a href='index.html'>rustful</a>::<a class='trait' href=''>RequestPlugin</a><a class='stability Experimental' title=''>Experimental</a><span class='out-of-band'><a id='src-2125' href='../src/rustful/src/lib.rs.html#126-129'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait RequestPlugin {
-    fn <a href='#tymethod.modify' class='fnname'>modify</a>(&amp;self, request: <a class='struct' href='../rustful/struct.Request.html' title='rustful::Request'>Request</a>) -&gt; <a class='type' href='../rustful/type.RequestResult.html' title='rustful::RequestResult'>RequestResult</a>;
+    fn <a href='#tymethod.modify' class='fnname'>modify</a>(&amp;self, request: <a class='struct' href='../rustful/struct.Request.html' title='rustful::Request'>Request</a>) -&gt; <a class='type' href='../rustful/type.RequestAction.html' title='rustful::RequestAction'>RequestAction</a>;
 }</pre><div class='docblock'><p>A trait for request plugins.</p>
 
-<p>They are able to modify and react to a <code>Request</code> befor it&#39;s sent to the handler.</p>
+<p>They are able to modify and react to a <code>Request</code> before it&#39;s sent to the handler.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.modify' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#tymethod.modify' class='fnname'>modify</a>(&amp;self, request: <a class='struct' href='../rustful/struct.Request.html' title='rustful::Request'>Request</a>) -&gt; <a class='type' href='../rustful/type.RequestResult.html' title='rustful::RequestResult'>RequestResult</a></code></h3><div class='docblock'><p>Try to modify the <code>Request</code>.</p>
+        <h3 id='tymethod.modify' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#tymethod.modify' class='fnname'>modify</a>(&amp;self, request: <a class='struct' href='../rustful/struct.Request.html' title='rustful::Request'>Request</a>) -&gt; <a class='type' href='../rustful/type.RequestAction.html' title='rustful::RequestAction'>RequestAction</a></code></h3><div class='docblock'><p>Try to modify the <code>Request</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
