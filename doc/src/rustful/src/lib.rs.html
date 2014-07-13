@@ -7,8 +7,6 @@
 
     <title>lib.rs.html -- source</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
-          rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../../../main.css">
 
     
@@ -712,10 +710,10 @@
 
 	<span class='ident'>cache</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span>,
 	<span class='ident'>cache_clean_interval</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span>,
-	<span class='ident'>last_cache_clean</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>Timespec</span><span class='op'>&gt;&gt;</span>,<span class='comment'>
+	<span class='ident'>last_cache_clean</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>Timespec</span><span class='op'>&gt;&gt;</span>,
 
-	//An ASCII star will be rewarded to the one who sugests a better alternative to the RWLock.
-	</span><span class='ident'>request_plugins</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Share</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>
+	<span class='comment'>//An ASCII star will be rewarded to the one who sugests a better alternative to the RWLock.</span>
+	<span class='ident'>request_plugins</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Share</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Share</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>H</span>, ()<span class='op'>&gt;</span> {
@@ -831,8 +829,8 @@
 				))
 			},
 			<span class='ident'>AbsolutePath</span>(<span class='ident'>path</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>parse_path</span>(<span class='ident'>path</span>)),
-			_ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span><span class='comment'> //TODO: Handle *
-		</span>};
+			_ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span> <span class='comment'>//TODO: Handle *</span>
+		};
 
 		<span class='kw'>match</span> <span class='ident'>path_components</span> {
 			<span class='prelude-val'>Some</span>((<span class='ident'>path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>)) <span class='op'>=&gt;</span> {
@@ -858,7 +856,7 @@
 						<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>find</span>(<span class='ident'>request</span>.<span class='ident'>method</span>.<span class='ident'>clone</span>(), <span class='ident'>request</span>.<span class='ident'>path</span>.<span class='ident'>as_slice</span>()) {
 							<span class='prelude-val'>Some</span>((<span class='ident'>handler</span>, <span class='ident'>variables</span>)) <span class='op'>=&gt;</span> {
 								<span class='ident'>request</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>variables</span>;
-								<span class='ident'>handler</span>.<span class='ident'>handle_request</span>(<span class='ident'>request</span>, <span class='op'>&amp;</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>cache</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>response</span>);
+								<span class='ident'>handler</span>.<span class='ident'>handle_request</span>(<span class='ident'>request</span>, <span class='kw-2'>&amp;</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>cache</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>response</span>);
 							},
 							<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
 								<span class='ident'>response</span>.<span class='ident'>headers</span>.<span class='ident'>content_length</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='number'>0</span>);
@@ -1016,8 +1014,8 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>writer</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>ResponseWriter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
 		<span class='ident'>Response</span> {
-			<span class='ident'>headers</span>: <span class='op'>*</span><span class='ident'>writer</span>.<span class='ident'>headers</span>.<span class='ident'>clone</span>(),<span class='comment'> //Can&#39;t be borrowed, because writer must be borrowed
-			</span><span class='ident'>status</span>: <span class='ident'>status</span>::<span class='prelude-val'>Ok</span>,
+			<span class='ident'>headers</span>: <span class='op'>*</span><span class='ident'>writer</span>.<span class='ident'>headers</span>.<span class='ident'>clone</span>(), <span class='comment'>//Can&#39;t be borrowed, because writer must be borrowed</span>
+			<span class='ident'>status</span>: <span class='ident'>status</span>::<span class='prelude-val'>Ok</span>,
 			<span class='ident'>writer</span>: <span class='ident'>writer</span>,
 			<span class='ident'>started_writing</span>: <span class='boolval'>false</span>
 		}
@@ -1035,31 +1033,31 @@
 	<span class='doccomment'>///It can only be called once.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
 		<span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>started_writing</span> {
-			<span class='self'>self</span>.<span class='ident'>started_writing</span> <span class='op'>=</span> <span class='boolval'>true</span>;<span class='comment'>
-			//TODO: Intercept headers and status
+			<span class='self'>self</span>.<span class='ident'>started_writing</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+			<span class='comment'>//TODO: Intercept headers and status</span>
 
-			</span><span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>status</span>.<span class='ident'>clone</span>();
-			<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>headers</span> <span class='op'>=</span> <span class='kw'>box</span> <span class='self'>self</span>.<span class='ident'>headers</span>.<span class='ident'>clone</span>();<span class='comment'>
+			<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>status</span>.<span class='ident'>clone</span>();
+			<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>headers</span> <span class='op'>=</span> <span class='kw'>box</span> <span class='self'>self</span>.<span class='ident'>headers</span>.<span class='ident'>clone</span>();
 
-			//TODO: Begin content interception
-		</span>}
+			<span class='comment'>//TODO: Begin content interception</span>
+		}
 	}
 
 	<span class='doccomment'>///Finish writing the response.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-		<span class='self'>self</span>.<span class='ident'>begin</span>();<span class='comment'>
+		<span class='self'>self</span>.<span class='ident'>begin</span>();
 
-		//TODO: End interception
-	</span>}
+		<span class='comment'>//TODO: End interception</span>
+	}
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>Writer</span> <span class='kw'>for</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
 	<span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-		<span class='self'>self</span>.<span class='ident'>begin</span>();<span class='comment'>
+		<span class='self'>self</span>.<span class='ident'>begin</span>();
 
-		//TODO: Intercept content
+		<span class='comment'>//TODO: Intercept content</span>
 
-		</span><span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>content</span>)
+		<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>content</span>)
 	}
 }
 
