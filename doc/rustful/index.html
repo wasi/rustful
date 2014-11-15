@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The rustful library documentation.">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `rustful` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, rustful">
 
     <title>rustful - Rust</title>
 
@@ -12,7 +14,7 @@
     
     
 </head>
-<body>
+<body class="rustdoc">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -39,7 +41,10 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Crate <a class='mod' href=''>rustful</a><span class='out-of-band'><a href='stability.html'>[stability dashboard]</a> <a id='src-0' href='../src/rustful/src/lib.rs.html#1-784'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>rustful</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-0' href='../src/rustful/src/lib.rs.html#1-756'>[src]</a></span></h1>
 <h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub use router::<a class='struct' href='../rustful/router/struct.Router.html' title='rustful::router::Router'>Router</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
@@ -48,6 +53,12 @@
                                title='rustful::cache'>cache</a></td>
                         <td class='docblock short'><p>Utility traits and implementations for cached resources.</p>
 </td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='mod' href='request_extensions/index.html'
+                               title='rustful::request_extensions'>request_extensions</a></td>
+                        <td class='docblock short'></td>
                     </tr>
                 
                     <tr>
@@ -81,21 +92,27 @@
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                     <tr>
-                        <td><a class='stability Experimental' title='Experimental'></a><a class='type' href='type.RequestAction.html'
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='enum' href='enum.RequestAction.html'
                                title='rustful::RequestAction'>RequestAction</a></td>
                         <td class='docblock short'><p>The result from a <code>RequestPlugin</code>.</p>
 </td>
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Experimental' title='Experimental'></a><a class='type' href='type.ResponseAction.html'
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='enum' href='enum.ResponseAction.html'
                                title='rustful::ResponseAction'>ResponseAction</a></td>
                         <td class='docblock short'><p>The result from a <code>ResponsePlugin</code>.</p>
 </td>
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Experimental' title='Experimental'></a><a class='type' href='type.ResponseResult.html'
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='enum' href='enum.ResponseData.html'
+                               title='rustful::ResponseData'>ResponseData</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Experimental' title='Experimental'></a><a class='enum' href='enum.ResponseResult.html'
                                title='rustful::ResponseResult'>ResponseResult</a></td>
                         <td class='docblock short'><p>The result of a response action.</p>
 </td>
@@ -114,6 +131,12 @@
                                title='rustful::Handler'>Handler</a></td>
                         <td class='docblock short'><p>A trait for request handlers.</p>
 </td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.IntoResponseData.html'
+                               title='rustful::IntoResponseData'>IntoResponseData</a></td>
+                        <td class='docblock short'></td>
                     </tr>
                 
                     <tr>
@@ -158,7 +181,7 @@
             </p>
             <p>
                 Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
             </p>

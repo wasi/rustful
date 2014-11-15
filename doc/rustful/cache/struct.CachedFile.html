@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The rustful library documentation.">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `CachedFile` struct in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, CachedFile">
 
     <title>rustful::cache::CachedFile - Rust</title>
 
@@ -12,7 +14,7 @@
     
     
 </head>
-<body>
+<body class="rustdoc">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -24,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>&#8203;::<a href='index.html'>cache</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.CachedFile.html'>CachedFile</a><a class='struct ' href='struct.CachedProcessedFile.html'>CachedProcessedFile</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.CachedValue.html'>CachedValue</a></div>
+        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>cache</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.CachedFile.html'>CachedFile</a><a class='struct ' href='struct.CachedProcessedFile.html'>CachedProcessedFile</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.CachedValue.html'>CachedValue</a></div>
     </section>
 
     <nav class="sub">
@@ -39,20 +41,23 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'>Struct <a href='../index.html'>rustful</a>::<a href='index.html'>cache</a>::<a class='struct' href=''>CachedFile</a><span class='out-of-band'><a id='src-1306' href='../../src/rustful/src/cache.rs.html#48-54'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>cache</a>::<wbr><a class='struct' href=''>CachedFile</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-1518' href='../../src/rustful/src/cache.rs.html#49-55'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct CachedFile {
     // some fields omitted
 }</pre><div class='docblock'><p>Cached raw file content.</p>
 
 <p>The whole file will be loaded when accessed.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></h3><div class='impl-methods'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>(path: <a class='struct' href='http://doc.rust-lang.org/master/std/path/posix/struct.Path.html' title='std::path::posix::Path'>Path</a>, unused_after: <a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/master/std/primitive.u32.html'>u32</a>&gt;) -&gt; <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></h3><div class='impl-methods'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>(path: <a class='struct' href='http://doc.rust-lang.org/nightly/std/path/posix/struct.Path.html' title='std::path::posix::Path'>Path</a>, unused_after: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt;) -&gt; <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></h4>
 <div class='docblock'><p>Creates a new <code>CachedFile</code> which will be freed <code>unused_after</code> seconds after the latest access.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../rustful/cache/trait.CachedValue.html' title='rustful::cache::CachedValue'>CachedValue</a>&lt;<a class='struct' href='http://doc.rust-lang.org/master/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/master/std/primitive.u8.html'>u8</a>&gt;&gt; for <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></h3><div class='impl-methods'><h4 id='method.use_current_value' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.use_current_value' class='fnname'>use_current_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='struct' href='http://doc.rust-lang.org/master/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/master/std/primitive.u8.html'>u8</a>&gt;&gt;| -&gt; R) -&gt; R</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../rustful/cache/trait.CachedValue.html' title='rustful::cache::CachedValue'>CachedValue</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt; for <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></h3><div class='impl-methods'><h4 id='method.use_current_value' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.use_current_value' class='fnname'>use_current_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;| -&gt; R) -&gt; R</code></h4>
 <h4 id='method.load' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.load' class='fnname'>load</a>(&amp;self)</code></h4>
 <h4 id='method.free' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.free' class='fnname'>free</a>(&amp;self)</code></h4>
-<h4 id='method.expired' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.expired' class='fnname'>expired</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/master/std/primitive.bool.html'>bool</a></code></h4>
-<h4 id='method.unused' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.unused' class='fnname'>unused</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/master/std/primitive.bool.html'>bool</a></code></h4>
-<h4 id='method.use_value' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.use_value' class='fnname'>use_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='type' href='http://doc.rust-lang.org/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R</code></h4>
+<h4 id='method.expired' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.expired' class='fnname'>expired</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.unused' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.unused' class='fnname'>unused</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.use_value' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.use_value' class='fnname'>use_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R</code></h4>
 <h4 id='method.clean' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.clean' class='fnname'>clean</a>(&amp;self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -83,7 +88,7 @@
             </p>
             <p>
                 Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
             </p>

@@ -69,6 +69,10 @@ body {
     margin: 0;
     position: relative;
     padding: 10px 15px 20px 15px;
+
+    -webkit-font-feature-settings: "kern", "liga";
+    -moz-font-feature-settings: "kern", "liga";
+    font-feature-settings: "kern", "liga";
 }
 
 h1 {
@@ -101,7 +105,7 @@ h3.impl, h3.method, h4.method {
 h3.impl, h3.method {
     margin-top: 15px;
 }
-h1, h2, h3, h4, section.sidebar, a.source, .search-input, .content table a {
+h1, h2, h3, h4, section.sidebar, a.source, .search-input, .content table :not(code)>a, .collapse-toggle {
     font-family: "Fira Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -120,6 +124,11 @@ code, pre {
     font-family: "Source Code Pro", Menlo, Monaco, Consolas, "DejaVu Sans Mono", Inconsolata, monospace;
     white-space: pre-wrap;
 }
+.docblock code {
+    background-color: #F5F5F5;
+    border-radius: 3px;
+    padding: 0 0.2em;
+}
 pre {
     background-color: #F5F5F5;
     padding: 14px;
@@ -127,6 +136,14 @@ pre {
 
 .source pre {
     padding: 20px;
+}
+
+.content.source {
+    margin-top: 50px;
+    max-width: none;
+    overflow: visible;
+    margin-left: 0px;
+    min-width: 70em;
 }
 
 nav.sub {
@@ -163,6 +180,8 @@ nav.sub {
     text-align: center;
     color: #333;
 }
+
+.location a:first-child { font-weight: 500; }
 
 .block {
     padding: 0 10px;
@@ -205,16 +224,17 @@ nav.sub {
 }
 
 .content .highlighted {
-    cursor: pointer;
     color: #000 !important;
     background-color: #ccc;
 }
-.content .highlighted a { color: #000 !important; }
+.content .highlighted a, .content .highlighted span { color: #000 !important; }
 .content .highlighted.trait { background-color: #fece7e; }
 .content .highlighted.mod { background-color: #afc6e4; }
 .content .highlighted.enum { background-color: #b4d1b9; }
 .content .highlighted.struct { background-color: #e7b1a0; }
 .content .highlighted.fn { background-color: #c6afb3; }
+.content .highlighted.method { background-color: #c6afb3; }
+.content .highlighted.ffi { background-color: #c6afb3; }
 
 .docblock.short.nowrap {
     display: block;
@@ -239,8 +259,19 @@ nav.sub {
 .docblock h3, .docblock h4, .docblock h5 { font-size: 1em; }
 
 .content .out-of-band {
-    float: right;
     font-size: 23px;
+    width: 40%;
+    margin: 0px;
+    padding: 0px;
+    text-align: right;
+    display: inline-block;
+}
+
+.content .in-band {
+    width: 60%;
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
 }
 
 .content table {
@@ -269,7 +300,10 @@ nav.sub {
 }
 .content .multi-column li { width: 100%; display: inline-block; }
 
-.content .method { font-size: 1em; }
+.content .method {
+    font-size: 1em;
+    position: relative;
+}
 .content .methods .docblock { margin-left: 40px; }
 
 .content .impl-methods .docblock { margin-left: 40px; }
@@ -308,11 +342,13 @@ a {
 p a { color: #4e8bca; }
 p a:hover { text-decoration: underline; }
 
-.content a.trait, .block a.current.trait { color: #ed9603; }
-.content a.mod, .block a.current.mod { color: #4d76ae; }
-.content a.enum, .block a.current.enum { color: #5e9766; }
-.content a.struct, .block a.current.struct { color: #e53700; }
-.content a.fn, .block a.current.fn { color: #8c6067; }
+.content span.trait, .content a.trait, .block a.current.trait { color: #ed9603; }
+.content span.mod, .content a.mod, block a.current.mod { color: #4d76ae; }
+.content span.enum, .content a.enum, .block a.current.enum { color: #5e9766; }
+.content span.struct, .content a.struct, .block a.current.struct { color: #e53700; }
+.content span.fn, .content a.fn, .block a.current.fn { color: #8c6067; }
+.content span.method, .content a.method, .block a.current.method { color: #8c6067; }
+.content span.ffi, .content a.ffi, .block a.current.ffi { color: #8c6067; }
 .content .fnname { color: #8c6067; }
 
 .search-input {
@@ -349,6 +385,13 @@ p a:hover { text-decoration: underline; }
     overflow: hidden;
     display: block;
 }
+
+.search-results a {
+    display: block;
+}
+
+.content .search-results td:first-child { padding-right: 0; }
+.content .search-results td:first-child a { padding-right: 10px; }
 
 #help {
     background: #e9e9e9;
@@ -397,7 +440,7 @@ h1 .stability {
     padding: 4px 10px;
 }
 
-.impl-methods .stability {
+.impl-methods .stability, .methods .stability {
     margin-right: 20px;
 }
 
@@ -407,7 +450,7 @@ h1 .stability {
 .stability.Stable { border-color: #54A759; color: #2D8632; }
 .stability.Frozen { border-color: #009431; color: #007726; }
 .stability.Locked { border-color: #0084B6; color: #00668c; }
-.stability.Unmarked { border-color: #FFFFFF; }
+.stability.Unmarked { border-color: #BBBBBB; }
 
 .summary {
     padding-right: 0px;
@@ -416,7 +459,7 @@ h1 .stability {
 .summary.Experimental { background-color: #D46D6A; }
 .summary.Unstable { background-color: #D4B16A; }
 .summary.Stable { background-color: #54A759; }
-.summary.Unmarked { background-color: #FFFFFF; }
+.summary.Unmarked { background-color: #BBBBBB; }
 
 :target { background: #FDFFD3; }
 
@@ -433,13 +476,14 @@ pre.rust .lifetime { color: #B76514; }
 
 .rusttest { display: none; }
 pre.rust { position: relative; }
-pre.rust a { transform: scaleX(-1); }
 .test-arrow {
     display: inline-block;
     position: absolute;
     top: 0;
     right: 10px;
     font-size: 150%;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
 .methods .section-header {
@@ -453,10 +497,78 @@ pre.rust a { transform: scaleX(-1); }
     content: '\2002\00a7\2002';
 }
 
+.collapse-toggle {
+    font-weight: 300;
+    position: absolute;
+    left: 13px;
+    color: #999;
+    margin-top: 2px;
+}
+
+.toggle-wrapper > .collapse-toggle {
+    left: -24px;
+    margin-top: 0px;
+}
+
+.toggle-wrapper {
+    position: relative;
+}
+
+.toggle-wrapper.collapsed {
+    height: 1em;
+    transition: height .2s;
+}
+
+.collapse-toggle > .inner {
+    display: inline-block;
+    width: 1ch;
+    text-align: center;
+}
+
+.toggle-label {
+    color: #999;
+}
+
+
+
 /* Media Queries */
 
 @media (max-width: 700px) {
+    body {
+        padding-top: 0px;
+    }
+
     .sidebar {
+        height: 40px;
+        min-height: 40px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        position: static;
+    }
+
+    .sidebar .location {
+        float: left;
+        margin: 0px;
+        padding: 5px;
+        width: 60%;
+        background: inherit;
+        text-align: left;
+        font-size: 24px;
+    }
+
+    .sidebar img {
+        width: 35px;
+        margin-top: 5px;
+        margin-bottom: 0px;
+        float: left;
+    }
+
+    nav.sub {
+        margin: 0 auto;
+    }
+
+    .sidebar .block {
         display: none;
     }
 
@@ -464,7 +576,11 @@ pre.rust a { transform: scaleX(-1); }
         margin-left: 0px;
     }
 
-    nav.sub {
-        margin: 0 auto;
+    .toggle-wrapper > .collapse-toggle {
+        left: 0px;
+    }
+
+    .toggle-wrapper {
+        height: 1.5em;
     }
 }

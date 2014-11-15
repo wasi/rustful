@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `RouterResult` type in crate `rustful`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, RouterResult">
+    <meta name="description" content="API documentation for the Rust `request_extensions` mod in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, request_extensions">
 
-    <title>rustful::router::RouterResult - Rust</title>
+    <title>rustful::request_extensions - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Router.html'>Router</a></div>
+        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../cache/index.html'>cache</a><a class='mod current' href='../request_extensions/index.html'>request_extensions</a><a class='mod ' href='../router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.Request.html'>Request</a><a class='struct ' href='../struct.Response.html'>Response</a><a class='struct ' href='../struct.Server.html'>Server</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='../enum.RequestAction.html'>RequestAction</a><a class='enum ' href='../enum.ResponseAction.html'>ResponseAction</a><a class='enum ' href='../enum.ResponseData.html'>ResponseData</a><a class='enum ' href='../enum.ResponseResult.html'>ResponseResult</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Cache.html'>Cache</a><a class='trait ' href='../trait.Handler.html'>Handler</a><a class='trait ' href='../trait.IntoResponseData.html'>IntoResponseData</a><a class='trait ' href='../trait.RequestPlugin.html'>RequestPlugin</a><a class='trait ' href='../trait.ResponsePlugin.html'>ResponsePlugin</a></div>
     </section>
 
     <nav class="sub">
@@ -40,12 +40,19 @@
         </form>
     </nav>
 
-    <section id='main' class="content type">
-<h1 class='fqn'><span class='in-band'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a>::<wbr><a class='type' href=''>RouterResult</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class='mod' href=''>request_extensions</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-196' href='../../src/rustful/src/router.rs.html#63'>[src]</a></span></h1>
-<pre class='rust typedef'>type RouterResult&lt;'a, T&gt; = <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(&amp;'a T, <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;)</a>&gt;;</pre></section>
+        </span><a id='src-2128' href='../../src/rustful/src/request_extensions.rs.html#1-17'>[src]</a></span></h1>
+<h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.QueryBody.html'
+                               title='rustful::request_extensions::QueryBody'>QueryBody</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

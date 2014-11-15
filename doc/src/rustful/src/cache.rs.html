@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The rustful library documentation.">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src/cache.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>cache.rs.html -- source</title>
 
@@ -12,7 +14,7 @@
     
     
 </head>
-<body>
+<body class="rustdoc">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -246,10 +248,12 @@
 <span id='206'>206</span>
 <span id='207'>207</span>
 <span id='208'>208</span>
+<span id='209'>209</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Utility traits and implementations for cached resources.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>File</span>, <span class='ident'>IoResult</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>fs</span>::<span class='ident'>PathExtensions</span>;
 
 <span class='kw'>use</span> <span class='ident'>time</span>;
 <span class='kw'>use</span> <span class='ident'>time</span>::<span class='ident'>Timespec</span>;
@@ -371,7 +375,7 @@
 	<span class='ident'>processor</span>: <span class='kw'>fn</span>(<span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>File</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span><span class='op'>+</span><span class='ident'>Share</span><span class='op'>&gt;</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span><span class='op'>+</span><span class='ident'>Sync</span><span class='op'>&gt;</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
 	<span class='doccomment'>///Creates a new `CachedProcessedFile` which will be freed `unused_after` seconds after the latest access.</span>
 	<span class='doccomment'>///The file will be processed by the provided `processor` function each time it&#39;s loaded.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>path</span>: <span class='ident'>Path</span>, <span class='ident'>unused_after</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>, <span class='ident'>processor</span>: <span class='kw'>fn</span>(<span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>File</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -386,7 +390,7 @@
 	}
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span><span class='op'>+</span><span class='ident'>Share</span><span class='op'>&gt;</span> <span class='ident'>CachedValue</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span><span class='op'>+</span><span class='ident'>Sync</span><span class='op'>&gt;</span> <span class='ident'>CachedValue</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>CachedProcessedFile</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
 	<span class='kw'>fn</span> <span class='ident'>use_current_value</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>do_this</span>: <span class='op'>|</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span><span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>R</span> {
 		<span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>unused_after</span>.<span class='ident'>is_some</span>() {
 			<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>last_accessed</span>.<span class='ident'>write</span>() <span class='op'>=</span> <span class='ident'>time</span>::<span class='ident'>get_time</span>();
@@ -485,7 +489,7 @@
             </p>
             <p>
                 Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
             </p>
