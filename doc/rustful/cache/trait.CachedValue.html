@@ -44,21 +44,21 @@
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>cache</a>::<wbr><a class='trait' href=''>CachedValue</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-1423' href='../../src/rustful/src/cache.rs.html#12-43'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait CachedValue&lt;T&gt; {
-    fn <a href='#tymethod.use_current_value' class='fnname'>use_current_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R;
+        </span><a id='src-1425' href='../../src/rustful/src/cache.rs.html#12-44'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait CachedValue&lt;'a, Value&gt; {
+    fn <a href='#tymethod.borrow_current' class='fnname'>borrow_current</a>(&amp;'a self) -&gt; Value;
     fn <a href='#tymethod.load' class='fnname'>load</a>(&amp;self);
     fn <a href='#tymethod.free' class='fnname'>free</a>(&amp;self);
     fn <a href='#tymethod.expired' class='fnname'>expired</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.unused' class='fnname'>unused</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
 
-    fn <a href='#method.use_value' class='fnname'>use_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R { ... }
+    fn <a href='#method.borrow' class='fnname'>borrow</a>(&amp;'a self) -&gt; Value { ... }
     fn <a href='#method.clean' class='fnname'>clean</a>(&amp;self) { ... }
 }</pre><div class='docblock'><p>This trait provides functions for handling cached resources.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.use_current_value' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.use_current_value' class='fnname'>use_current_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R</code></h3><div class='docblock'><p><code>do_this</code> with the cached value, without loading or reloading it.</p>
+        <h3 id='tymethod.borrow_current' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.borrow_current' class='fnname'>borrow_current</a>(&amp;'a self) -&gt; Value</code></h3><div class='docblock'><p>Borrow the cached value, without loading or reloading it.</p>
 </div><h3 id='tymethod.load' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.load' class='fnname'>load</a>(&amp;self)</code></h3><div class='docblock'><p>Load the cached value.</p>
 </div><h3 id='tymethod.free' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.free' class='fnname'>free</a>(&amp;self)</code></h3><div class='docblock'><p>Free the cached value.</p>
 </div><h3 id='tymethod.expired' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.expired' class='fnname'>expired</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Check if the cached value has expired.</p>
@@ -66,13 +66,13 @@
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.use_value' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.use_value' class='fnname'>use_value</a>&lt;R&gt;(&amp;self, do_this: |<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;| -&gt; R) -&gt; R</code></h3><div class='docblock'><p>Reload the cached value if it has expired and <code>do_this</code> with it.</p>
+        <h3 id='method.borrow' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.borrow' class='fnname'>borrow</a>(&amp;'a self) -&gt; Value</code></h3><div class='docblock'><p>Reload the cached value if it has expired and borrow it.</p>
 </div><h3 id='method.clean' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.clean' class='fnname'>clean</a>(&amp;self)</code></h3><div class='docblock'><p>Free the cached value if it&#39;s unused.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../rustful/cache/trait.CachedValue.html' title='rustful::cache::CachedValue'>CachedValue</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt; for <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/kinds/trait.Send.html' title='core::kinds::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/kinds/trait.Sync.html' title='core::kinds::Sync'>Sync</a>&gt; <a class='trait' href='../../rustful/cache/trait.CachedValue.html' title='rustful::cache::CachedValue'>CachedValue</a>&lt;T&gt; for <a class='struct' href='../../rustful/cache/struct.CachedProcessedFile.html' title='rustful::cache::CachedProcessedFile'>CachedProcessedFile</a>&lt;T&gt;</code></li>
+    <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='trait' href='../../rustful/cache/trait.CachedValue.html' title='rustful::cache::CachedValue'>CachedValue</a>&lt;'a, <a class='struct' href='http://doc.rust-lang.org/nightly/sync/lock/struct.RWLockReadGuard.html' title='sync::lock::RWLockReadGuard'>RWLockReadGuard</a>&lt;'a, <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;&gt;&gt; for <a class='struct' href='../../rustful/cache/struct.CachedFile.html' title='rustful::cache::CachedFile'>CachedFile</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/kinds/trait.Send.html' title='core::kinds::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/kinds/trait.Sync.html' title='core::kinds::Sync'>Sync</a>&gt; <a class='trait' href='../../rustful/cache/trait.CachedValue.html' title='rustful::cache::CachedValue'>CachedValue</a>&lt;'a, <a class='struct' href='http://doc.rust-lang.org/nightly/sync/lock/struct.RWLockReadGuard.html' title='sync::lock::RWLockReadGuard'>RWLockReadGuard</a>&lt;'a, <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;&gt;&gt; for <a class='struct' href='../../rustful/cache/struct.CachedProcessedFile.html' title='rustful::cache::CachedProcessedFile'>CachedProcessedFile</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/rustful/cache/trait.CachedValue.js">
                       </script></section>
