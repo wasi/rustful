@@ -793,11 +793,6 @@
 <span id='751'>751</span>
 <span id='752'>752</span>
 <span id='753'>753</span>
-<span id='754'>754</span>
-<span id='755'>755</span>
-<span id='756'>756</span>
-<span id='757'>757</span>
-<span id='758'>758</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
 
@@ -828,15 +823,18 @@
 <span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>headers</span>::<span class='ident'>content_type</span>::<span class='ident'>MediaType</span>;
 <span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>headers</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>IoResult</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>IoResult</span>, <span class='ident'>IoError</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>IpAddr</span>, <span class='ident'>Ipv4Addr</span>, <span class='ident'>Port</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>::<span class='ident'>FromError</span>;
 
 <span class='kw'>use</span> <span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>RWLock</span>};
 
 <span class='kw'>use</span> <span class='ident'>time</span>::<span class='ident'>Timespec</span>;
 
 <span class='kw'>use</span> <span class='ident'>url</span>::<span class='ident'>percent_encoding</span>::<span class='ident'>lossy_utf8_percent_decode</span>;
+
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ResponseAction</span>::{<span class='ident'>Write</span>, <span class='ident'>DoNothing</span>, <span class='ident'>Error</span>};
 
 <span class='kw'>mod</span> <span class='ident'>utils</span>;
 
@@ -857,15 +855,18 @@
 
 <span class='doccomment'>///The result of a response action.</span>
 <span class='attribute'>#[<span class='ident'>experimental</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResponseResult</span> {
-	<span class='doccomment'>///The response action was successful.</span>
-    <span class='ident'>Success</span>,
-
-    <span class='doccomment'>///A response plugin failed.</span>
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResponseError</span> {
+	<span class='doccomment'>///A response plugin failed.</span>
     <span class='ident'>PluginError</span>(<span class='ident'>String</span>),
 
     <span class='doccomment'>///There was an IO error.</span>
-    <span class='ident'>IoError</span>(<span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>IoError</span>)
+    <span class='ident'>IoError</span>(<span class='ident'>IoError</span>)
+}
+
+<span class='kw'>impl</span> <span class='ident'>FromError</span><span class='op'>&lt;</span><span class='ident'>IoError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ResponseError</span> {
+	<span class='kw'>fn</span> <span class='ident'>from_error</span>(<span class='ident'>err</span>: <span class='ident'>IoError</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseError</span> {
+		<span class='ident'>ResponseError</span>::<span class='ident'>IoError</span>(<span class='ident'>err</span>)
+	}
 }
 
 <span class='doccomment'>///The result from a `ResponsePlugin`.</span>
@@ -883,15 +884,15 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>IntoResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>(<span class='ident'>data</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-		<span class='ident'>Write</span>(<span class='ident'>data</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>d</span><span class='op'>|</span> <span class='ident'>d</span>.<span class='ident'>into_response_data</span>()))
+		<span class='ident'>ResponseAction</span>::<span class='ident'>Write</span>(<span class='ident'>data</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>d</span><span class='op'>|</span> <span class='ident'>d</span>.<span class='ident'>into_response_data</span>()))
 	}
 
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>do_nothing</span>() <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-		<span class='ident'>DoNothing</span>
+		<span class='ident'>ResponseAction</span>::<span class='ident'>DoNothing</span>
 	}
 
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>error</span>(<span class='ident'>message</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-		<span class='ident'>Error</span>(<span class='ident'>message</span>)
+		<span class='ident'>ResponseAction</span>::<span class='ident'>Error</span>(<span class='ident'>message</span>)
 	}
 }
 
@@ -904,30 +905,30 @@
 	<span class='ident'>ByteSlice</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]),
 
 	<span class='doccomment'>///Data in string form.</span>
-	<span class='ident'>Str</span>(<span class='ident'>String</span>),
+	<span class='ident'>String</span>(<span class='ident'>String</span>),
 
 	<span class='doccomment'>///Data in string form.</span>
-	<span class='ident'>StrSlice</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>)
+	<span class='ident'>StringSlice</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>)
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
 	<span class='doccomment'>///Borrow the content as a byte slice.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_bytes</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>] {
 		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>Bytes</span>(<span class='kw-2'>ref</span> <span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='ident'>bytes</span>.<span class='ident'>as_slice</span>(),
-			<span class='kw-2'>&amp;</span><span class='ident'>ByteSlice</span>(<span class='kw-2'>ref</span> <span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>bytes</span>,
-			<span class='kw-2'>&amp;</span><span class='ident'>Str</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>as_bytes</span>(),
-			<span class='kw-2'>&amp;</span><span class='ident'>StrSlice</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>as_bytes</span>()
+			<span class='kw-2'>&amp;</span><span class='ident'>ResponseData</span>::<span class='ident'>Bytes</span>(<span class='kw-2'>ref</span> <span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='ident'>bytes</span>.<span class='ident'>as_slice</span>(),
+			<span class='kw-2'>&amp;</span><span class='ident'>ResponseData</span>::<span class='ident'>ByteSlice</span>(<span class='kw-2'>ref</span> <span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>bytes</span>,
+			<span class='kw-2'>&amp;</span><span class='ident'>ResponseData</span>::<span class='ident'>String</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>as_bytes</span>(),
+			<span class='kw-2'>&amp;</span><span class='ident'>ResponseData</span>::<span class='ident'>StringSlice</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>as_bytes</span>()
 		}
 	}
 
 	<span class='doccomment'>///Turns the content into a byte vector. Slices are copied.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_bytes</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> {
 		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='ident'>Bytes</span>(<span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='ident'>bytes</span>,
-			<span class='ident'>ByteSlice</span>(<span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='ident'>bytes</span>.<span class='ident'>to_vec</span>(),
-			<span class='ident'>Str</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>into_bytes</span>(),
-			<span class='ident'>StrSlice</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>as_bytes</span>().<span class='ident'>to_vec</span>()
+			<span class='ident'>ResponseData</span>::<span class='ident'>Bytes</span>(<span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='ident'>bytes</span>,
+			<span class='ident'>ResponseData</span>::<span class='ident'>ByteSlice</span>(<span class='ident'>bytes</span>) <span class='op'>=&gt;</span> <span class='ident'>bytes</span>.<span class='ident'>to_vec</span>(),
+			<span class='ident'>ResponseData</span>::<span class='ident'>String</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>into_bytes</span>(),
+			<span class='ident'>ResponseData</span>::<span class='ident'>StringSlice</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>string</span>.<span class='ident'>as_bytes</span>().<span class='ident'>to_vec</span>()
 		}
 	}
 
@@ -935,8 +936,8 @@
 	<span class='doccomment'>///Returns an `None` if the content is a byte vector, a byte slice or if the action is `Error`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
 		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='kw-2'>&amp;</span><span class='ident'>Str</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>.<span class='ident'>as_slice</span>()),
-			<span class='kw-2'>&amp;</span><span class='ident'>StrSlice</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>.<span class='ident'>as_slice</span>()),
+			<span class='kw-2'>&amp;</span><span class='ident'>ResponseData</span>::<span class='ident'>String</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>.<span class='ident'>as_slice</span>()),
+			<span class='kw-2'>&amp;</span><span class='ident'>ResponseData</span>::<span class='ident'>StringSlice</span>(<span class='kw-2'>ref</span> <span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>.<span class='ident'>as_slice</span>()),
 			_ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>
 		}
 	}
@@ -946,8 +947,8 @@
 	<span class='doccomment'>///Slices are copied.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_string</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
 		<span class='kw'>match</span> <span class='self'>self</span> {
-			<span class='ident'>Str</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>),
-			<span class='ident'>StrSlice</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>.<span class='ident'>into_string</span>()),
+			<span class='ident'>ResponseData</span>::<span class='ident'>String</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>),
+			<span class='ident'>ResponseData</span>::<span class='ident'>StringSlice</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>string</span>.<span class='ident'>into_string</span>()),
 			_ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>
 		}
 	}
@@ -961,25 +962,25 @@
 
 <span class='kw'>impl</span> <span class='ident'>IntoResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> {
 	<span class='kw'>fn</span> <span class='ident'>into_response_data</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-		<span class='ident'>Bytes</span>(<span class='self'>self</span>)
+		<span class='ident'>ResponseData</span>::<span class='ident'>Bytes</span>(<span class='self'>self</span>)
 	}
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>IntoResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>] {
 	<span class='kw'>fn</span> <span class='ident'>into_response_data</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-		<span class='ident'>ByteSlice</span>(<span class='self'>self</span>)
+		<span class='ident'>ResponseData</span>::<span class='ident'>ByteSlice</span>(<span class='self'>self</span>)
 	}
 }
 
 <span class='kw'>impl</span> <span class='ident'>IntoResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>String</span> {
 	<span class='kw'>fn</span> <span class='ident'>into_response_data</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-		<span class='ident'>Str</span>(<span class='self'>self</span>)
+		<span class='ident'>ResponseData</span>::<span class='ident'>String</span>(<span class='self'>self</span>)
 	}
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>IntoResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span> {
 	<span class='kw'>fn</span> <span class='ident'>into_response_data</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-		<span class='ident'>StrSlice</span>(<span class='self'>self</span>)
+		<span class='ident'>ResponseData</span>::<span class='ident'>StringSlice</span>(<span class='self'>self</span>)
 	}
 }
 
@@ -1156,11 +1157,11 @@
 	}
 
 	<span class='kw'>fn</span> <span class='ident'>modify_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>Request</span>) <span class='op'>-&gt;</span> <span class='ident'>RequestAction</span> {
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Continue</span>(<span class='ident'>request</span>);
+		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>RequestAction</span>::<span class='ident'>Continue</span>(<span class='ident'>request</span>);
 
 		<span class='kw'>for</span> <span class='ident'>plugin</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>request_plugins</span>.<span class='ident'>read</span>().<span class='ident'>iter</span>() {
 			<span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>result</span> {
-				<span class='ident'>Continue</span>(<span class='ident'>request</span>) <span class='op'>=&gt;</span> <span class='ident'>plugin</span>.<span class='ident'>modify</span>(<span class='ident'>request</span>),
+				<span class='ident'>RequestAction</span>::<span class='ident'>Continue</span>(<span class='ident'>request</span>) <span class='op'>=&gt;</span> <span class='ident'>plugin</span>.<span class='ident'>modify</span>(<span class='ident'>request</span>),
 				_ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>result</span>
 			};
 		}
@@ -1223,7 +1224,7 @@
 				};
 
 				<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>modify_request</span>(<span class='ident'>request</span>) {
-					<span class='ident'>Continue</span>(<span class='kw-2'>mut</span> <span class='ident'>request</span>) <span class='op'>=&gt;</span> {
+					<span class='ident'>RequestAction</span>::<span class='ident'>Continue</span>(<span class='kw-2'>mut</span> <span class='ident'>request</span>) <span class='op'>=&gt;</span> {
 						<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>find</span>(<span class='ident'>request</span>.<span class='ident'>method</span>.<span class='ident'>clone</span>(), <span class='ident'>request</span>.<span class='ident'>path</span>.<span class='ident'>as_slice</span>()) {
 							<span class='prelude-val'>Some</span>((<span class='ident'>handler</span>, <span class='ident'>variables</span>)) <span class='op'>=&gt;</span> {
 								<span class='ident'>request</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>variables</span>;
@@ -1235,7 +1236,7 @@
 							}
 						}
 					},
-					<span class='ident'>Abort</span>(<span class='ident'>status</span>) <span class='op'>=&gt;</span> {
+					<span class='ident'>RequestAction</span>::<span class='ident'>Abort</span>(<span class='ident'>status</span>) <span class='op'>=&gt;</span> {
 						<span class='ident'>response</span>.<span class='ident'>headers</span>.<span class='ident'>content_length</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='number'>0</span>);
 						<span class='ident'>response</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>status</span>;
 					}
@@ -1247,7 +1248,10 @@
 			}
 		}
 
-		<span class='ident'>response</span>.<span class='ident'>end</span>();
+		<span class='comment'>//TODO: Maybe log errors here.</span>
+		<span class='kw'>match</span> <span class='ident'>response</span>.<span class='ident'>end</span>() {
+			_ <span class='op'>=&gt;</span> {}
+		}
 
 		<span class='self'>self</span>.<span class='ident'>cache_clean_interval</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>t</span><span class='op'>|</span> {
 			<span class='kw'>let</span> <span class='ident'>clean_time</span> <span class='op'>=</span> {
@@ -1351,34 +1355,30 @@
 
 	<span class='doccomment'>///Writes a string or any other `BytesContainer` to the client.</span>
 	<span class='doccomment'>///The headers will be written the first time `send()` is called.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Content</span>: <span class='ident'>IntoResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>Content</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseResult</span> {
-		<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>begin</span>() {
-			<span class='ident'>Success</span> <span class='op'>=&gt;</span> {
-				<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>plugin_result</span> <span class='op'>=</span> <span class='ident'>ResponseAction</span>::<span class='ident'>write</span>(<span class='prelude-val'>Some</span>(<span class='ident'>content</span>));
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Content</span>: <span class='ident'>IntoResponseData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>Content</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ResponseError</span><span class='op'>&gt;</span> {
+		<span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>begin</span>());
+		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>plugin_result</span> <span class='op'>=</span> <span class='ident'>ResponseAction</span>::<span class='ident'>write</span>(<span class='prelude-val'>Some</span>(<span class='ident'>content</span>));
 
-				<span class='kw'>for</span> <span class='ident'>plugin</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>plugins</span>.<span class='ident'>iter</span>() {
-					<span class='ident'>plugin_result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>plugin_result</span> {
-						<span class='ident'>Write</span>(<span class='ident'>content</span>) <span class='op'>=&gt;</span> <span class='ident'>plugin</span>.<span class='ident'>write</span>(<span class='ident'>content</span>),
-						_ <span class='op'>=&gt;</span> <span class='kw'>break</span>
-					}
-				}
-
-				<span class='kw'>let</span> <span class='ident'>write_result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>plugin_result</span> {
-					<span class='ident'>Write</span>(<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>s</span>.<span class='ident'>as_bytes</span>())),
-					_ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>
-				};
-
-				<span class='kw'>match</span> <span class='ident'>write_result</span> {
-					<span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>(_)) <span class='op'>=&gt;</span> <span class='ident'>Success</span>,
-					<span class='prelude-val'>Some</span>(<span class='prelude-val'>Err</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> <span class='ident'>IoError</span>(<span class='ident'>e</span>),
-					<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>plugin_result</span> {
-						<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>PluginError</span>(<span class='ident'>e</span>),
-						<span class='ident'>Write</span>(<span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> <span class='ident'>Success</span>,
-						_ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
-					}
-				}
+		<span class='kw'>for</span> <span class='ident'>plugin</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>plugins</span>.<span class='ident'>iter</span>() {
+			<span class='ident'>plugin_result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>plugin_result</span> {
+				<span class='ident'>Write</span>(<span class='ident'>content</span>) <span class='op'>=&gt;</span> <span class='ident'>plugin</span>.<span class='ident'>write</span>(<span class='ident'>content</span>),
+				_ <span class='op'>=&gt;</span> <span class='kw'>break</span>
 			}
-			<span class='ident'>r</span> <span class='op'>=&gt;</span> <span class='ident'>r</span>
+		}
+
+		<span class='kw'>let</span> <span class='ident'>write_result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>plugin_result</span> {
+			<span class='ident'>Write</span>(<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>s</span>.<span class='ident'>as_bytes</span>())),
+			_ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>
+		};
+
+		<span class='kw'>match</span> <span class='ident'>write_result</span> {
+			<span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>(_)) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(()),
+			<span class='prelude-val'>Some</span>(<span class='prelude-val'>Err</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>IoError</span>(<span class='ident'>e</span>)),
+			<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>plugin_result</span> {
+				<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>)),
+				<span class='ident'>Write</span>(<span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(()),
+				_ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
+			}
 		}
 	}
 
@@ -1386,7 +1386,7 @@
 	<span class='doccomment'>///</span>
 	<span class='doccomment'>///This method will be called automatically by `send()` and `end()`, if it hasn&#39;t been called before.</span>
 	<span class='doccomment'>///It can only be called once.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseResult</span> {
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ResponseError</span><span class='op'>&gt;</span> {
 		<span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>started_writing</span> {
 			<span class='self'>self</span>.<span class='ident'>started_writing</span> <span class='op'>=</span> <span class='boolval'>true</span>;
 
@@ -1425,82 +1425,72 @@
 			}
 
 			<span class='kw'>match</span> <span class='ident'>header_result</span> {
-				(_, _, <span class='ident'>Error</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> <span class='ident'>PluginError</span>(<span class='ident'>e</span>),
+				(_, _, <span class='ident'>Error</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>)),
 				(<span class='ident'>status</span>, <span class='ident'>headers</span>, <span class='ident'>last_result</span>) <span class='op'>=&gt;</span> {
 					<span class='ident'>write_queue</span>.<span class='ident'>push</span>(<span class='ident'>last_result</span>);
 
 					<span class='kw'>for</span> <span class='ident'>action</span> <span class='kw'>in</span> <span class='ident'>write_queue</span>.<span class='ident'>into_iter</span>() {
-						<span class='kw'>let</span> <span class='ident'>write_result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>action</span> {
-							<span class='ident'>Write</span>(<span class='prelude-val'>Some</span>(<span class='ident'>content</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>content</span>.<span class='ident'>as_bytes</span>()),
-							<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>PluginError</span>(<span class='ident'>e</span>),
-							_ <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(())
-						};
-
-						<span class='kw'>match</span> <span class='ident'>write_result</span> {
-							<span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>IoError</span>(<span class='ident'>e</span>),
-							_ <span class='op'>=&gt;</span> {}
+						<span class='macro'>try</span><span class='macro'>!</span>{
+							<span class='kw'>match</span> <span class='ident'>action</span> {
+								<span class='ident'>Write</span>(<span class='prelude-val'>Some</span>(<span class='ident'>content</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>content</span>.<span class='ident'>as_bytes</span>()),
+								<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>)),
+								_ <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(())
+							}
 						}
 					}
 
 					<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>status</span>;
 					<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>headers</span> <span class='op'>=</span> <span class='ident'>headers</span>;
-					<span class='ident'>Success</span>
+					<span class='prelude-val'>Ok</span>(())
 				},
 			}
 		} <span class='kw'>else</span> {
-			<span class='ident'>Success</span>
+			<span class='prelude-val'>Ok</span>(())
 		}
 	}
 
 	<span class='doccomment'>///Finish writing the response.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseResult</span> {
-		<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>begin</span>() {
-			<span class='ident'>Success</span> <span class='op'>=&gt;</span> {
-				<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>write_queue</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ResponseAction</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ResponseError</span><span class='op'>&gt;</span> {
+		<span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>begin</span>());
+		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>write_queue</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ResponseAction</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
 
-				<span class='kw'>for</span> <span class='ident'>plugin</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>plugins</span>.<span class='ident'>iter</span>() {
-					<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>error</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
-					<span class='ident'>write_queue</span> <span class='op'>=</span> <span class='ident'>write_queue</span>.<span class='ident'>into_iter</span>().<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='ident'>action</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>action</span> {
-						<span class='ident'>Write</span>(<span class='ident'>content</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>plugin</span>.<span class='ident'>write</span>(<span class='ident'>content</span>)),
-						<span class='ident'>DoNothing</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
-						<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
-							<span class='ident'>error</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>);
-							<span class='prelude-val'>None</span>
-						}
-					}).<span class='ident'>collect</span>();
-
-					<span class='kw'>match</span> <span class='ident'>error</span> {
-						<span class='prelude-val'>Some</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>PluginError</span>(<span class='ident'>e</span>),
-						<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>write_queue</span>.<span class='ident'>push</span>(<span class='ident'>plugin</span>.<span class='ident'>end</span>())
-					}
+		<span class='kw'>for</span> <span class='ident'>plugin</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>plugins</span>.<span class='ident'>iter</span>() {
+			<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>error</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
+			<span class='ident'>write_queue</span> <span class='op'>=</span> <span class='ident'>write_queue</span>.<span class='ident'>into_iter</span>().<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='ident'>action</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>action</span> {
+				<span class='ident'>Write</span>(<span class='ident'>content</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>plugin</span>.<span class='ident'>write</span>(<span class='ident'>content</span>)),
+				<span class='ident'>DoNothing</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+				<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
+					<span class='ident'>error</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>);
+					<span class='prelude-val'>None</span>
 				}
+			}).<span class='ident'>collect</span>();
 
-				<span class='kw'>for</span> <span class='ident'>action</span> <span class='kw'>in</span> <span class='ident'>write_queue</span>.<span class='ident'>into_iter</span>() {
-					<span class='kw'>let</span> <span class='ident'>write_result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>action</span> {
-						<span class='ident'>Write</span>(<span class='prelude-val'>Some</span>(<span class='ident'>content</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>content</span>.<span class='ident'>as_bytes</span>()),
-						<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>PluginError</span>(<span class='ident'>e</span>),
-						_ <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(())
-					};
-
-					<span class='kw'>match</span> <span class='ident'>write_result</span> {
-						<span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>IoError</span>(<span class='ident'>e</span>),
-						_ <span class='op'>=&gt;</span> {}
-					}
-				}
-
-				<span class='ident'>Success</span>
-			},
-			<span class='ident'>r</span> <span class='op'>=&gt;</span> <span class='ident'>r</span>
+			<span class='kw'>match</span> <span class='ident'>error</span> {
+				<span class='prelude-val'>Some</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>)),
+				<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>write_queue</span>.<span class='ident'>push</span>(<span class='ident'>plugin</span>.<span class='ident'>end</span>())
+			}
 		}
+
+		<span class='kw'>for</span> <span class='ident'>action</span> <span class='kw'>in</span> <span class='ident'>write_queue</span>.<span class='ident'>into_iter</span>() {
+			<span class='macro'>try</span><span class='macro'>!</span>{
+				<span class='kw'>match</span> <span class='ident'>action</span> {
+					<span class='ident'>Write</span>(<span class='prelude-val'>Some</span>(<span class='ident'>content</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write</span>(<span class='ident'>content</span>.<span class='ident'>as_bytes</span>()),
+					<span class='ident'>Error</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>)),
+					_ <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(())
+				}
+			}
+		}
+
+		<span class='prelude-val'>Ok</span>(())
 	}
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;c</span><span class='op'>&gt;</span> <span class='ident'>Writer</span> <span class='kw'>for</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;c</span><span class='op'>&gt;</span> {
 	<span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
 		<span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>send</span>(<span class='ident'>content</span>) {
-			<span class='ident'>Success</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(()),
-			<span class='ident'>IoError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>),
-			<span class='ident'>PluginError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>IoError</span>{
+			<span class='prelude-val'>Ok</span>(()) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(()),
+			<span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>IoError</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>),
+			<span class='prelude-val'>Err</span>(<span class='ident'>ResponseError</span>::<span class='ident'>PluginError</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>IoError</span>{
 				<span class='ident'>kind</span>: <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>OtherIoError</span>,
 				<span class='ident'>desc</span>: <span class='string'>&quot;response plugin error&quot;</span>,
 				<span class='ident'>detail</span>: <span class='prelude-val'>Some</span>(<span class='ident'>e</span>)

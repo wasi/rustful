@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `ResponseResult` enum in crate `rustful`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, ResponseResult">
+    <meta name="description" content="API documentation for the Rust `ResponseError` enum in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ResponseError">
 
-    <title>rustful::ResponseResult - Rust</title>
+    <title>rustful::ResponseError - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='cache/index.html'>cache</a><a class='mod ' href='request_extensions/index.html'>request_extensions</a><a class='mod ' href='router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Request.html'>Request</a><a class='struct ' href='struct.Response.html'>Response</a><a class='struct ' href='struct.Server.html'>Server</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.RequestAction.html'>RequestAction</a><a class='enum ' href='enum.ResponseAction.html'>ResponseAction</a><a class='enum ' href='enum.ResponseData.html'>ResponseData</a><a class='enum current' href='enum.ResponseResult.html'>ResponseResult</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.Cache.html'>Cache</a><a class='trait ' href='trait.Handler.html'>Handler</a><a class='trait ' href='trait.IntoResponseData.html'>IntoResponseData</a><a class='trait ' href='trait.RequestPlugin.html'>RequestPlugin</a><a class='trait ' href='trait.ResponsePlugin.html'>ResponsePlugin</a></div>
+        <p class='location'><a href='index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='cache/index.html'>cache</a><a class='mod ' href='request_extensions/index.html'>request_extensions</a><a class='mod ' href='router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Request.html'>Request</a><a class='struct ' href='struct.Response.html'>Response</a><a class='struct ' href='struct.Server.html'>Server</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.RequestAction.html'>RequestAction</a><a class='enum ' href='enum.ResponseAction.html'>ResponseAction</a><a class='enum ' href='enum.ResponseData.html'>ResponseData</a><a class='enum current' href='enum.ResponseError.html'>ResponseError</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.Cache.html'>Cache</a><a class='trait ' href='trait.Handler.html'>Handler</a><a class='trait ' href='trait.IntoResponseData.html'>IntoResponseData</a><a class='trait ' href='trait.RequestPlugin.html'>RequestPlugin</a><a class='trait ' href='trait.ResponsePlugin.html'>ResponsePlugin</a></div>
     </section>
 
     <nav class="sub">
@@ -41,20 +41,19 @@
     </nav>
 
     <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>rustful</a>::<wbr><a class='enum' href=''>ResponseResult</a><wbr><a class='stability Experimental' title=''>Experimental</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>rustful</a>::<wbr><a class='enum' href=''>ResponseError</a><wbr><a class='stability Experimental' title=''>Experimental</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2152' href='../src/rustful/src/lib.rs.html#59-68'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum ResponseResult {
-    Success,
+        </span><a id='src-2163' href='../src/rustful/src/lib.rs.html#62-68'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum ResponseError {
     PluginError(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
     IoError(<a class='struct' href='http://doc.rust-lang.org/nightly/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>),
 }</pre><div class='docblock'><p>The result of a response action.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Success'><a class='stability Experimental' title='Experimental'></a><code>Success</code></td><td><div class='docblock'><p>The response action was successful.</p>
-</div></td></tr><tr><td id='variant.PluginError'><a class='stability Experimental' title='Experimental'></a><code>PluginError</code></td><td><div class='docblock'><p>A response plugin failed.</p>
+<table><tr><td id='variant.PluginError'><a class='stability Experimental' title='Experimental'></a><code>PluginError</code></td><td><div class='docblock'><p>A response plugin failed.</p>
 </div></td></tr><tr><td id='variant.IoError'><a class='stability Experimental' title='Experimental'></a><code>IoError</code></td><td><div class='docblock'><p>There was an IO error.</p>
-</div></td></tr></table></section>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/std/error/trait.FromError.html' title='std::error::FromError'>FromError</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>&gt; for <a class='enum' href='../rustful/enum.ResponseError.html' title='rustful::ResponseError'>ResponseError</a></code></h3><div class='impl-methods'><h4 id='method.from_error' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.from_error' class='fnname'>from_error</a>(err: <a class='struct' href='http://doc.rust-lang.org/nightly/std/io/struct.IoError.html' title='std::io::IoError'>IoError</a>) -&gt; <a class='enum' href='../rustful/enum.ResponseError.html' title='rustful::ResponseError'>ResponseError</a></code></h4>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
