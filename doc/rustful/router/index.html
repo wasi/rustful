@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../cache/index.html'>cache</a><a class='mod ' href='../request_extensions/index.html'>request_extensions</a><a class='mod current' href='../router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.Request.html'>Request</a><a class='struct ' href='../struct.Response.html'>Response</a><a class='struct ' href='../struct.Server.html'>Server</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='../enum.RequestAction.html'>RequestAction</a><a class='enum ' href='../enum.ResponseAction.html'>ResponseAction</a><a class='enum ' href='../enum.ResponseData.html'>ResponseData</a><a class='enum ' href='../enum.ResponseError.html'>ResponseError</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Cache.html'>Cache</a><a class='trait ' href='../trait.Handler.html'>Handler</a><a class='trait ' href='../trait.IntoResponseData.html'>IntoResponseData</a><a class='trait ' href='../trait.RequestPlugin.html'>RequestPlugin</a><a class='trait ' href='../trait.ResponsePlugin.html'>ResponsePlugin</a></div>
+        <p class='location'><a href='../index.html'>rustful</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../cache/index.html'>cache</a><a class='mod ' href='../request_extensions/index.html'>request_extensions</a><a class='mod current' href='../router/index.html'>router</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.Request.html'>Request</a><a class='struct ' href='../struct.Response.html'>Response</a><a class='struct ' href='../struct.Server.html'>Server</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='../enum.RequestAction.html'>RequestAction</a><a class='enum ' href='../enum.ResponseAction.html'>ResponseAction</a><a class='enum ' href='../enum.ResponseData.html'>ResponseData</a><a class='enum ' href='../enum.ResponseError.html'>ResponseError</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Cache.html'>Cache</a><a class='trait ' href='../trait.Handler.html'>Handler</a><a class='trait ' href='../trait.IntoResponseData.html'>IntoResponseData</a><a class='trait ' href='../trait.RequestPlugin.html'>RequestPlugin</a><a class='trait ' href='../trait.ResponsePlugin.html'>ResponsePlugin</a><a class='trait ' href='../trait.Router.html'>Router</a></div>
     </section>
 
     <nav class="sub">
@@ -44,10 +44,10 @@
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class='mod' href=''>router</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]
             </a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-195' href='../../src/rustful/src/router.rs.html#1-656'>[src]</a></span></h1>
-<div class='docblock'><p><code>Router</code> stores items, such as request handlers, using an HTTP method and a path as keys.</p>
+        </span><a id='src-195' href='../../src/rustful/src/router.rs.html#1-660'>[src]</a></span></h1>
+<div class='docblock'><p><code>TreeRouter</code> stores items, such as request handlers, using an HTTP method and a path as keys.</p>
 
-<p>The <code>Router</code> can be created from a vector of predefined paths, like this:</p>
+<p>The <code>TreeRouter</code> can be created from a vector of predefined paths, like this:</p>
 <pre class='rust '>
 <span class='kw'>let</span> <span class='ident'>routes</span> <span class='op'>=</span> [
     (<span class='ident'>Get</span>, <span class='string'>&quot;/about&quot;</span>, <span class='ident'>about_us</span>),
@@ -57,12 +57,12 @@
     (<span class='ident'>Get</span>, <span class='string'>&quot;/&quot;</span>, <span class='ident'>show_welcome</span>)
 ];
 
-<span class='kw'>let</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>Router</span>::<span class='ident'>from_routes</span>(<span class='kw-2'>&amp;</span><span class='ident'>routes</span>);
+<span class='kw'>let</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='ident'>from_routes</span>(<span class='kw-2'>&amp;</span><span class='ident'>routes</span>);
 </pre>
 
-<p>Routes may also be added after the <code>Router</code> was created, like this:</p>
+<p>Routes may also be added after the <code>TreeRouter</code> was created, like this:</p>
 <pre class='rust '>
-<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>Router</span>::<span class='ident'>new</span>();
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='ident'>new</span>();
 
 <span class='ident'>router</span>.<span class='ident'>insert_item</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/about&quot;</span>, <span class='ident'>about_us</span>);
 <span class='ident'>router</span>.<span class='ident'>insert_item</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/user/:user&quot;</span>, <span class='ident'>show_user</span>);
@@ -101,8 +101,8 @@ These can be found in the crate <code>rustful_macros</code>.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Router.html'
-                               title='rustful::router::Router'>Router</a></td>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.TreeRouter.html'
+                               title='rustful::router::TreeRouter'>TreeRouter</a></td>
                         <td class='docblock short'><p>Stores items, such as request handlers, using an HTTP method and a path as keys.</p>
 </td>
                     </tr>
