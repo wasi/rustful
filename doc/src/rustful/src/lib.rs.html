@@ -805,6 +805,112 @@
 <span id='763'>763</span>
 <span id='764'>764</span>
 <span id='765'>765</span>
+<span id='766'>766</span>
+<span id='767'>767</span>
+<span id='768'>768</span>
+<span id='769'>769</span>
+<span id='770'>770</span>
+<span id='771'>771</span>
+<span id='772'>772</span>
+<span id='773'>773</span>
+<span id='774'>774</span>
+<span id='775'>775</span>
+<span id='776'>776</span>
+<span id='777'>777</span>
+<span id='778'>778</span>
+<span id='779'>779</span>
+<span id='780'>780</span>
+<span id='781'>781</span>
+<span id='782'>782</span>
+<span id='783'>783</span>
+<span id='784'>784</span>
+<span id='785'>785</span>
+<span id='786'>786</span>
+<span id='787'>787</span>
+<span id='788'>788</span>
+<span id='789'>789</span>
+<span id='790'>790</span>
+<span id='791'>791</span>
+<span id='792'>792</span>
+<span id='793'>793</span>
+<span id='794'>794</span>
+<span id='795'>795</span>
+<span id='796'>796</span>
+<span id='797'>797</span>
+<span id='798'>798</span>
+<span id='799'>799</span>
+<span id='800'>800</span>
+<span id='801'>801</span>
+<span id='802'>802</span>
+<span id='803'>803</span>
+<span id='804'>804</span>
+<span id='805'>805</span>
+<span id='806'>806</span>
+<span id='807'>807</span>
+<span id='808'>808</span>
+<span id='809'>809</span>
+<span id='810'>810</span>
+<span id='811'>811</span>
+<span id='812'>812</span>
+<span id='813'>813</span>
+<span id='814'>814</span>
+<span id='815'>815</span>
+<span id='816'>816</span>
+<span id='817'>817</span>
+<span id='818'>818</span>
+<span id='819'>819</span>
+<span id='820'>820</span>
+<span id='821'>821</span>
+<span id='822'>822</span>
+<span id='823'>823</span>
+<span id='824'>824</span>
+<span id='825'>825</span>
+<span id='826'>826</span>
+<span id='827'>827</span>
+<span id='828'>828</span>
+<span id='829'>829</span>
+<span id='830'>830</span>
+<span id='831'>831</span>
+<span id='832'>832</span>
+<span id='833'>833</span>
+<span id='834'>834</span>
+<span id='835'>835</span>
+<span id='836'>836</span>
+<span id='837'>837</span>
+<span id='838'>838</span>
+<span id='839'>839</span>
+<span id='840'>840</span>
+<span id='841'>841</span>
+<span id='842'>842</span>
+<span id='843'>843</span>
+<span id='844'>844</span>
+<span id='845'>845</span>
+<span id='846'>846</span>
+<span id='847'>847</span>
+<span id='848'>848</span>
+<span id='849'>849</span>
+<span id='850'>850</span>
+<span id='851'>851</span>
+<span id='852'>852</span>
+<span id='853'>853</span>
+<span id='854'>854</span>
+<span id='855'>855</span>
+<span id='856'>856</span>
+<span id='857'>857</span>
+<span id='858'>858</span>
+<span id='859'>859</span>
+<span id='860'>860</span>
+<span id='861'>861</span>
+<span id='862'>862</span>
+<span id='863'>863</span>
+<span id='864'>864</span>
+<span id='865'>865</span>
+<span id='866'>866</span>
+<span id='867'>867</span>
+<span id='868'>868</span>
+<span id='869'>869</span>
+<span id='870'>870</span>
+<span id='871'>871</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
 
@@ -1015,6 +1121,10 @@
 	<span class='kw'>fn</span> <span class='ident'>handle_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>Request</span>, <span class='ident'>cache</span>: <span class='kw-2'>&amp;</span><span class='ident'>C</span>, <span class='ident'>response</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Response</span>);
 }
 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='kw'>for</span> () {
+	<span class='kw'>fn</span> <span class='ident'>handle_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>_request</span>: <span class='ident'>Request</span>, <span class='ident'>_cache</span>: <span class='kw-2'>&amp;</span><span class='ident'>C</span>, <span class='ident'>_response</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Response</span>) {}
+}
+
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='kw'>fn</span>(<span class='ident'>Request</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Response</span>) {
 	<span class='kw'>fn</span> <span class='ident'>handle_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>Request</span>, <span class='ident'>_cache</span>: <span class='kw-2'>&amp;</span><span class='ident'>C</span>, <span class='ident'>response</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Response</span>) {
 		(<span class='op'>*</span><span class='self'>self</span>)(<span class='ident'>request</span>, <span class='ident'>response</span>);
@@ -1027,7 +1137,7 @@
 	}
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>C</span>, <span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;&gt;</span> <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>H</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>C</span>: <span class='ident'>Cache</span>, <span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;&gt;</span> <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>H</span> {
 	<span class='kw'>fn</span> <span class='ident'>find</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>_method</span>: <span class='kw-2'>&amp;</span><span class='ident'>Method</span>, <span class='ident'>_path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='kw-2'>&amp;</span><span class='ident'>H</span>, <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span> {
 		<span class='prelude-val'>Some</span>((<span class='self'>self</span>, <span class='ident'>HashMap</span>::<span class='ident'>new</span>()))
 	}
@@ -1074,25 +1184,190 @@
 
 
 
-<span class='doccomment'>///Receives the HTTP requests and passes them on to handlers.</span>
+<span class='doccomment'>///Used to build and run a server.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>///```ignore</span>
+<span class='doccomment'>///Each field has a corresponding modifier method and</span>
+<span class='doccomment'>///calls to these methods can be chained for quick setup.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///```no_run</span>
 <span class='doccomment'>///# use rustful::Server;</span>
-<span class='doccomment'>///# use rustful::router::Router;</span>
-<span class='doccomment'>///# use http::method::Method;</span>
-<span class='doccomment'>///# let routes: &amp;[(Method, &amp;str, ()), ..0] = [].as_slice();</span>
-<span class='doccomment'>///let server = Server::new(8080, Router::from_routes(routes));</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///server.run();</span>
+<span class='doccomment'>///# let router = ();</span>
+<span class='doccomment'>///Server::new().port(8080).handlers(router).run();</span>
 <span class='doccomment'>///```</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///A router with response handlers</span>
+	<span class='doccomment'>///One or several response handlers.</span>
+	<span class='kw'>pub</span> <span class='ident'>handlers</span>: <span class='ident'>R</span>,
+
+	<span class='doccomment'>///The port where the server will listen for requests.</span>
+	<span class='kw'>pub</span> <span class='ident'>port</span>: <span class='ident'>Port</span>,
+
+	<span class='doccomment'>///The host address where the server will listen for requests.</span>
+	<span class='kw'>pub</span> <span class='ident'>host</span>: <span class='ident'>IpAddr</span>,
+
+	<span class='doccomment'>///The content of the server header.</span>
+	<span class='kw'>pub</span> <span class='ident'>server</span>: <span class='ident'>String</span>,
+
+	<span class='doccomment'>///The default media type.</span>
+	<span class='kw'>pub</span> <span class='ident'>content_type</span>: <span class='ident'>MediaType</span>,
+
+	<span class='doccomment'>///A structure where resources are cached.</span>
+	<span class='kw'>pub</span> <span class='ident'>cache</span>: <span class='ident'>C</span>,
+
+	<span class='doccomment'>///How often the cache should be cleaned. Measured in seconds.</span>
+	<span class='kw'>pub</span> <span class='ident'>cache_clean_interval</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span>,
+
+	<span class='doccomment'>///The request plugin stack.</span>
+	<span class='attribute'>#[<span class='ident'>experimental</span>]</span>
+	<span class='kw'>pub</span> <span class='ident'>request_plugins</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
+
+	<span class='doccomment'>///The response plugin stack.</span>
+	<span class='attribute'>#[<span class='ident'>experimental</span>]</span>
+	<span class='kw'>pub</span> <span class='ident'>response_plugins</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponsePlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>
+}
+
+<span class='kw'>impl</span> <span class='ident'>Server</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span> {
+	<span class='doccomment'>///Create a new empty server which will listen on host address `0.0.0.0` and port `80`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span> {
+		<span class='ident'>Server</span> {
+			<span class='ident'>handlers</span>: (),
+			<span class='ident'>port</span>: <span class='number'>80</span>,
+			<span class='ident'>host</span>: <span class='ident'>Ipv4Addr</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
+			<span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>into_string</span>(),
+			<span class='ident'>content_type</span>: <span class='ident'>MediaType</span> {
+				<span class='ident'>type_</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;text&quot;</span>),
+				<span class='ident'>subtype</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;plain&quot;</span>),
+				<span class='ident'>parameters</span>: <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;charset&quot;</span>), <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;UTF-8&quot;</span>))]
+			},
+			<span class='ident'>cache</span>: (),
+			<span class='ident'>cache_clean_interval</span>: <span class='prelude-val'>None</span>,
+			<span class='ident'>request_plugins</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+			<span class='ident'>response_plugins</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+		}
+	}
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+	<span class='doccomment'>///Set request handlers.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>handlers</span><span class='op'>&lt;</span><span class='ident'>NewRouter</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>, <span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>handlers</span>: <span class='ident'>NewRouter</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>NewRouter</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='ident'>Server</span> {
+			<span class='ident'>handlers</span>: <span class='ident'>handlers</span>,
+			<span class='ident'>port</span>: <span class='self'>self</span>.<span class='ident'>port</span>,
+			<span class='ident'>host</span>: <span class='self'>self</span>.<span class='ident'>host</span>,
+			<span class='ident'>server</span>: <span class='self'>self</span>.<span class='ident'>server</span>,
+			<span class='ident'>content_type</span>: <span class='self'>self</span>.<span class='ident'>content_type</span>,
+			<span class='ident'>cache</span>: <span class='self'>self</span>.<span class='ident'>cache</span>,
+			<span class='ident'>cache_clean_interval</span>: <span class='self'>self</span>.<span class='ident'>cache_clean_interval</span>,
+			<span class='ident'>request_plugins</span>: <span class='self'>self</span>.<span class='ident'>request_plugins</span>,
+			<span class='ident'>response_plugins</span>: <span class='self'>self</span>.<span class='ident'>response_plugins</span>,
+		}
+	}
+
+	<span class='doccomment'>///Change the port. Default is `80`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>port</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>port</span>: <span class='ident'>Port</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>port</span> <span class='op'>=</span> <span class='ident'>port</span>;
+		<span class='self'>self</span>
+	}
+
+	<span class='doccomment'>///Change the host address. Default is `0.0.0.0`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>host</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>host</span>: <span class='ident'>IpAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>host</span> <span class='op'>=</span> <span class='ident'>host</span>;
+		<span class='self'>self</span>
+	}
+
+	<span class='doccomment'>///Set resource cache.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cache</span><span class='op'>&lt;</span><span class='ident'>NewCache</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>cache</span>: <span class='ident'>NewCache</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>NewCache</span><span class='op'>&gt;</span> {
+		<span class='ident'>Server</span> {
+			<span class='ident'>handlers</span>: <span class='self'>self</span>.<span class='ident'>handlers</span>,
+			<span class='ident'>port</span>: <span class='self'>self</span>.<span class='ident'>port</span>,
+			<span class='ident'>host</span>: <span class='self'>self</span>.<span class='ident'>host</span>,
+			<span class='ident'>server</span>: <span class='self'>self</span>.<span class='ident'>server</span>,
+			<span class='ident'>content_type</span>: <span class='self'>self</span>.<span class='ident'>content_type</span>,
+			<span class='ident'>cache</span>: <span class='ident'>cache</span>,
+			<span class='ident'>cache_clean_interval</span>: <span class='self'>self</span>.<span class='ident'>cache_clean_interval</span>,
+			<span class='ident'>request_plugins</span>: <span class='self'>self</span>.<span class='ident'>request_plugins</span>,
+			<span class='ident'>response_plugins</span>: <span class='self'>self</span>.<span class='ident'>response_plugins</span>,
+		}
+	}
+
+	<span class='doccomment'>///Set the minimal number of seconds between each cache clean.</span>
+	<span class='doccomment'>///</span>
+	<span class='doccomment'>///Passing `None` disables cache cleaning.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cache_clean_interval</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>interval</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>cache_clean_interval</span> <span class='op'>=</span> <span class='ident'>interval</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>i64</span>);
+		<span class='self'>self</span>
+	}
+
+	<span class='doccomment'>///Change the server response header. Default is `rustful`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>server_name</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>name</span>;
+		<span class='self'>self</span>
+	}
+
+	<span class='doccomment'>///Change the default content type. Default is `text/plain`.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>content_type</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content_type</span>: <span class='ident'>MediaType</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>content_type</span> <span class='op'>=</span> <span class='ident'>content_type</span>;
+		<span class='self'>self</span>
+	}
+
+	<span class='doccomment'>///Add a request plugin to the plugin stack.</span>
+	<span class='attribute'>#[<span class='ident'>experimental</span>]</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_request_plugin</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>plugin</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span>  <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>request_plugins</span>.<span class='ident'>push</span>(<span class='kw'>box</span> <span class='ident'>plugin</span> <span class='kw'>as</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>);
+		<span class='self'>self</span>
+	}
+
+	<span class='doccomment'>///Add a response plugin to the plugin stack.</span>
+	<span class='attribute'>#[<span class='ident'>experimental</span>]</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_response_plugin</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>ResponsePlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>plugin</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span>  <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='self'>self</span>.<span class='ident'>response_plugins</span>.<span class='ident'>push</span>(<span class='kw'>box</span> <span class='ident'>plugin</span> <span class='kw'>as</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponsePlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>);
+		<span class='self'>self</span>
+	}
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>
+	<span class='kw'>where</span>
+	<span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>,
+	<span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>,
+	<span class='ident'>C</span>: <span class='ident'>Cache</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>
+{
+	<span class='doccomment'>///Start the server and run forever.</span>
+	<span class='doccomment'>///This will only return if the initial connection fails.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) {
+		<span class='kw'>let</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>build</span>();
+		<span class='ident'>server</span>.<span class='ident'>serve_forever</span>();
+	}
+
+	<span class='doccomment'>///Build a runnable instance of the server.</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='ident'>ServerInstance</span> {
+			<span class='ident'>handlers</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>handlers</span>),
+			<span class='ident'>port</span>: <span class='self'>self</span>.<span class='ident'>port</span>,
+			<span class='ident'>host</span>: <span class='self'>self</span>.<span class='ident'>host</span>,
+			<span class='ident'>server</span>: <span class='self'>self</span>.<span class='ident'>server</span>,
+			<span class='ident'>content_type</span>: <span class='self'>self</span>.<span class='ident'>content_type</span>,
+			<span class='ident'>cache</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>cache</span>),
+			<span class='ident'>cache_clean_interval</span>: <span class='self'>self</span>.<span class='ident'>cache_clean_interval</span>,
+			<span class='ident'>last_cache_clean</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>RWLock</span>::<span class='ident'>new</span>(<span class='ident'>Timespec</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>))),
+			<span class='ident'>request_plugins</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>request_plugins</span>),
+			<span class='ident'>response_plugins</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>response_plugins</span>),
+		}
+	}
+}
+
+<span class='doccomment'>///A runnable instance of a server.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///It&#39;s not meant to be used directly,</span>
+<span class='doccomment'>///unless additional control is required.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///```no_run</span>
+<span class='doccomment'>///# use rustful::Server;</span>
+<span class='doccomment'>///# let router = ();</span>
+<span class='doccomment'>///let server_instance = Server::new().port(8080).handlers(router).build();</span>
+<span class='doccomment'>///```</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
 	<span class='ident'>handlers</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>,
 
-	<span class='doccomment'>///The port where the server will listen for requests</span>
 	<span class='ident'>port</span>: <span class='ident'>Port</span>,
-
-	<span class='doccomment'>///Host address</span>
 	<span class='ident'>host</span>: <span class='ident'>IpAddr</span>,
 
 	<span class='ident'>server</span>: <span class='ident'>String</span>,
@@ -1102,88 +1377,16 @@
 	<span class='ident'>cache_clean_interval</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span>,
 	<span class='ident'>last_cache_clean</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>Timespec</span><span class='op'>&gt;&gt;</span>,
 
-	<span class='comment'>//An ASCII star will be rewarded to the one who sugests a better alternative to the RWLock.</span>
-	<span class='ident'>request_plugins</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>,
-	<span class='ident'>response_plugins</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>RWLock</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponsePlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>
+	<span class='ident'>request_plugins</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
+	<span class='ident'>response_plugins</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponsePlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>, <span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, ()<span class='op'>&gt;</span> {
-	<span class='doccomment'>///Create a new `Server` which will listen on the provided port and host address `0.0.0.0`.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>port</span>: <span class='ident'>Port</span>, <span class='ident'>handlers</span>: <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, ()<span class='op'>&gt;</span> {
-		<span class='ident'>Server</span>::<span class='ident'>with_cache</span>(<span class='ident'>port</span>, (), <span class='ident'>handlers</span>)
-	}
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>, <span class='ident'>C</span>: <span class='ident'>Cache</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>, <span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///Creates a new `Server` with a resource cache.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>///The server will listen listen on the provided port and host address `0.0.0.0`.</span>
-	<span class='doccomment'>///Cache cleaning is disabled by default. </span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_cache</span>(<span class='ident'>port</span>: <span class='ident'>Port</span>, <span class='ident'>cache</span>: <span class='ident'>C</span>, <span class='ident'>handlers</span>: <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-		<span class='ident'>Server</span> {
-			<span class='ident'>handlers</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>handlers</span>),
-			<span class='ident'>port</span>: <span class='ident'>port</span>,
-			<span class='ident'>host</span>: <span class='ident'>Ipv4Addr</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
-			<span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>into_string</span>(),
-			<span class='ident'>content_type</span>: <span class='ident'>MediaType</span> {
-				<span class='ident'>type_</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;text&quot;</span>),
-				<span class='ident'>subtype</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;plain&quot;</span>),
-				<span class='ident'>parameters</span>: <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;charset&quot;</span>), <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;UTF-8&quot;</span>))]
-			},
-			<span class='ident'>cache</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>cache</span>),
-			<span class='ident'>cache_clean_interval</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>last_cache_clean</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>RWLock</span>::<span class='ident'>new</span>(<span class='ident'>Timespec</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>))),
-			<span class='ident'>request_plugins</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>RWLock</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>())),
-			<span class='ident'>response_plugins</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>RWLock</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>())),
-		}
-	}
-
-	<span class='doccomment'>///Start the server and run forever.</span>
-	<span class='doccomment'>///This will only return if the initial connection fails.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) {
-		<span class='self'>self</span>.<span class='ident'>serve_forever</span>();
-	}
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>///Change the host address.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_host</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>host</span>: <span class='ident'>IpAddr</span>) {
-		<span class='self'>self</span>.<span class='ident'>host</span> <span class='op'>=</span> <span class='ident'>host</span>;
-	}
-
-	<span class='doccomment'>///Set the minimal number of seconds between each cache clean.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>///Passing `None` disables cache cleaning.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_clean_interval</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>interval</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>) {
-		<span class='self'>self</span>.<span class='ident'>cache_clean_interval</span> <span class='op'>=</span> <span class='ident'>interval</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>i64</span>);
-	}
-
-	<span class='doccomment'>///Change the server response header.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_server_name</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>String</span>) {
-		<span class='self'>self</span>.<span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>name</span>;
-	}
-
-	<span class='doccomment'>///Change the default content type.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_content_type</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content_type</span>: <span class='ident'>MediaType</span>) {
-		<span class='self'>self</span>.<span class='ident'>content_type</span> <span class='op'>=</span> <span class='ident'>content_type</span>;
-	}
-
-	<span class='doccomment'>///Add a request plugin to the plugin stack.</span>
-	<span class='attribute'>#[<span class='ident'>experimental</span>]</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_request_plugin</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>plugin</span>: <span class='ident'>P</span>) {
-		<span class='self'>self</span>.<span class='ident'>request_plugins</span>.<span class='ident'>write</span>().<span class='ident'>push</span>(<span class='kw'>box</span> <span class='ident'>plugin</span> <span class='kw'>as</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>RequestPlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>);
-	}
-
-	<span class='doccomment'>///Add a response plugin to the plugin stack.</span>
-	<span class='attribute'>#[<span class='ident'>experimental</span>]</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_response_plugin</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>ResponsePlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>plugin</span>: <span class='ident'>P</span>) {
-		<span class='self'>self</span>.<span class='ident'>response_plugins</span>.<span class='ident'>write</span>().<span class='ident'>push</span>(<span class='kw'>box</span> <span class='ident'>plugin</span> <span class='kw'>as</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponsePlugin</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>);
-	}
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
 
 	<span class='kw'>fn</span> <span class='ident'>modify_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>Request</span>) <span class='op'>-&gt;</span> <span class='ident'>RequestAction</span> {
 		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>RequestAction</span>::<span class='ident'>Continue</span>(<span class='ident'>request</span>);
 
-		<span class='kw'>for</span> <span class='ident'>plugin</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>request_plugins</span>.<span class='ident'>read</span>().<span class='ident'>iter</span>() {
+		<span class='kw'>for</span> <span class='ident'>plugin</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>request_plugins</span>.<span class='ident'>iter</span>() {
 			<span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>result</span> {
 				<span class='ident'>RequestAction</span>::<span class='ident'>Continue</span>(<span class='ident'>request</span>) <span class='op'>=&gt;</span> <span class='ident'>plugin</span>.<span class='ident'>modify</span>(<span class='ident'>request</span>),
 				_ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>result</span>
@@ -1192,9 +1395,15 @@
 
 		<span class='ident'>result</span>
 	}
+
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>, <span class='ident'>C</span>: <span class='ident'>Cache</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>, <span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span> <span class='ident'>http</span>::<span class='ident'>server</span>::<span class='ident'>Server</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>H</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>http</span>::<span class='ident'>server</span>::<span class='ident'>Server</span> <span class='kw'>for</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>
+	<span class='kw'>where</span>
+	<span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>,
+	<span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>,
+	<span class='ident'>C</span>: <span class='ident'>Cache</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>,
+{
 	<span class='kw'>fn</span> <span class='ident'>get_config</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Config</span> {
 		<span class='ident'>Config</span> {
 			<span class='ident'>bind_address</span>: <span class='ident'>SocketAddr</span> {
@@ -1213,8 +1422,7 @@
 			..
 		} <span class='op'>=</span> <span class='ident'>request</span>;
 
-		<span class='kw'>let</span> <span class='ident'>plugins</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>response_plugins</span>.<span class='ident'>read</span>();
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='ident'>plugins</span>.<span class='ident'>deref</span>());
+		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='self'>self</span>.<span class='ident'>response_plugins</span>.<span class='ident'>deref</span>());
 		<span class='ident'>response</span>.<span class='ident'>headers</span>.<span class='ident'>date</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>time</span>::<span class='ident'>now_utc</span>());
 		<span class='ident'>response</span>.<span class='ident'>headers</span>.<span class='ident'>content_type</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>content_type</span>.<span class='ident'>clone</span>());
 		<span class='ident'>response</span>.<span class='ident'>headers</span>.<span class='ident'>server</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>server</span>.<span class='ident'>clone</span>());
@@ -1291,9 +1499,13 @@
 	}
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>, <span class='ident'>C</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-	<span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
-		<span class='ident'>Server</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>
+	<span class='kw'>where</span>
+	<span class='ident'>R</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>,
+	<span class='ident'>C</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>
+{
+	<span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='ident'>ServerInstance</span> {
 			<span class='ident'>handlers</span>: <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>clone</span>(),
 			<span class='ident'>port</span>: <span class='self'>self</span>.<span class='ident'>port</span>,
 			<span class='ident'>host</span>: <span class='self'>self</span>.<span class='ident'>host</span>.<span class='ident'>clone</span>(),
