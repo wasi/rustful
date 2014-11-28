@@ -281,11 +281,11 @@
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>File</span>, <span class='ident'>IoResult</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>fs</span>::<span class='ident'>PathExtensions</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::{<span class='ident'>RWLock</span>, <span class='ident'>RWLockReadGuard</span>};
 
 <span class='kw'>use</span> <span class='ident'>time</span>;
 <span class='kw'>use</span> <span class='ident'>time</span>::<span class='ident'>Timespec</span>;
 
-<span class='kw'>use</span> <span class='ident'>sync</span>::{<span class='ident'>RWLock</span>, <span class='ident'>RWLockReadGuard</span>};
 
 <span class='doccomment'>///This trait provides functions for handling cached resources.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>CachedValue</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Value</span><span class='op'>&gt;</span> {
