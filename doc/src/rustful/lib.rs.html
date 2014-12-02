@@ -9,7 +9,7 @@
 
     <title>lib.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
     
@@ -910,11 +910,11 @@
 <span id='868'>868</span>
 <span id='869'>869</span>
 <span id='870'>870</span>
+<span id='871'>871</span>
+<span id='872'>872</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>comment</span> <span class='op'>=</span> <span class='string'>&quot;RESTful web framework&quot;</span>]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>license</span> <span class='op'>=</span> <span class='string'>&quot;MIT&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span> <span class='op'>=</span> <span class='string'>&quot;rlib&quot;</span>]</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://ogeon.github.io/rustful/doc/&quot;</span>)]</span>
@@ -932,7 +932,7 @@
 
 <span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>server</span>::<span class='ident'>Server</span> <span class='kw'>as</span> <span class='ident'>HttpServer</span>;
 <span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>server</span>::{<span class='ident'>ResponseWriter</span>, <span class='ident'>Config</span>};
-<span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>server</span>::<span class='ident'>request</span>::{<span class='ident'>AbsoluteUri</span>, <span class='ident'>AbsolutePath</span>};
+<span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>server</span>::<span class='ident'>request</span>::<span class='ident'>RequestUri</span>::{<span class='ident'>AbsoluteUri</span>, <span class='ident'>AbsolutePath</span>};
 <span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>method</span>::<span class='ident'>Method</span>;
 <span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>status</span>;
 <span class='kw'>use</span> <span class='ident'>http</span>::<span class='ident'>status</span>::{<span class='ident'>NotFound</span>, <span class='ident'>BadRequest</span>, <span class='ident'>Status</span>};
@@ -943,7 +943,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>IpAddr</span>, <span class='ident'>Ipv4Addr</span>, <span class='ident'>Port</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>::<span class='ident'>FromError</span>;
-
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>RWLock</span>};
 
 <span class='kw'>use</span> <span class='ident'>time</span>::<span class='ident'>Timespec</span>;
@@ -1226,21 +1226,7 @@
 <span class='kw'>impl</span> <span class='ident'>Server</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span> {
 	<span class='doccomment'>///Create a new empty server which will listen on host address `0.0.0.0` and port `80`.</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span>(), ()<span class='op'>&gt;</span> {
-		<span class='ident'>Server</span> {
-			<span class='ident'>handlers</span>: (),
-			<span class='ident'>port</span>: <span class='number'>80</span>,
-			<span class='ident'>host</span>: <span class='ident'>Ipv4Addr</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
-			<span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>into_string</span>(),
-			<span class='ident'>content_type</span>: <span class='ident'>MediaType</span> {
-				<span class='ident'>type_</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;text&quot;</span>),
-				<span class='ident'>subtype</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;plain&quot;</span>),
-				<span class='ident'>parameters</span>: <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;charset&quot;</span>), <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;UTF-8&quot;</span>))]
-			},
-			<span class='ident'>cache</span>: (),
-			<span class='ident'>cache_clean_interval</span>: <span class='prelude-val'>None</span>,
-			<span class='ident'>request_plugins</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-			<span class='ident'>response_plugins</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-		}
+		<span class='ident'>Default</span>::<span class='ident'>default</span>()
 	}
 }
 
@@ -1348,6 +1334,24 @@
 			<span class='ident'>last_cache_clean</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>RWLock</span>::<span class='ident'>new</span>(<span class='ident'>Timespec</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>))),
 			<span class='ident'>request_plugins</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>request_plugins</span>),
 			<span class='ident'>response_plugins</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>response_plugins</span>),
+		}
+	}
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>R</span>: <span class='ident'>Default</span>, <span class='ident'>C</span>: <span class='ident'>Default</span> {
+	<span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span> {
+		<span class='ident'>Server</span> {
+			<span class='ident'>port</span>: <span class='number'>80</span>,
+			<span class='ident'>host</span>: <span class='ident'>Ipv4Addr</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
+			<span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>into_string</span>(),
+			<span class='ident'>content_type</span>: <span class='ident'>MediaType</span> {
+				<span class='ident'>type_</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;text&quot;</span>),
+				<span class='ident'>subtype</span>: <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;plain&quot;</span>),
+				<span class='ident'>parameters</span>: <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;charset&quot;</span>), <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;UTF-8&quot;</span>))]
+			},
+			<span class='ident'>cache_clean_interval</span>: <span class='prelude-val'>None</span>,
+
+			..<span class='ident'>Default</span>::<span class='ident'>default</span>()
 		}
 	}
 }
@@ -1821,13 +1825,13 @@
     
 
     <script>
-        window.rootPath = "../../../";
+        window.rootPath = "../../";
         window.currentCrate = "rustful";
         window.playgroundUrl = "";
     </script>
-    <script src="../../../jquery.js"></script>
-    <script src="../../../main.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
     
-    <script async src="../../../search-index.js"></script>
+    <script async src="../../search-index.js"></script>
 </body>
 </html>
