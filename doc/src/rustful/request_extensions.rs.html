@@ -57,22 +57,24 @@
 <span id='15'>15</span>
 <span id='16'>16</span>
 <span id='17'>17</span>
+<span id='18'>18</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>IoResult</span>;
 
 <span class='kw'>use</span> <span class='ident'>utils</span>;
 <span class='kw'>use</span> <span class='ident'>Request</span>;
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>QueryBody</span> {
-    <span class='kw'>fn</span> <span class='ident'>parse_query_body</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>read_query_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;&gt;</span>;
 }
 
-<span class='kw'>impl</span> <span class='ident'>QueryBody</span> <span class='kw'>for</span> <span class='ident'>Request</span> {
-    <span class='doccomment'>///Parse the request body as a query string.</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>QueryBody</span> <span class='kw'>for</span> <span class='ident'>Request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>///Rad and parse the request body as a query string.</span>
     <span class='doccomment'>///The body will be decoded as UTF-8 and plain &#39;+&#39; characters will be replaced with spaces.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>parse_query_body</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='ident'>utils</span>::<span class='ident'>parse_parameters</span>(<span class='self'>self</span>.<span class='ident'>body</span>.<span class='ident'>as_slice</span>())
+    <span class='kw'>fn</span> <span class='ident'>read_query_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IoResult</span><span class='op'>&lt;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;&gt;</span> {
+        <span class='prelude-val'>Ok</span>(<span class='ident'>utils</span>::<span class='ident'>parse_parameters</span>(<span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>read_to_end</span>()).<span class='ident'>as_slice</span>()))
     }
 }
 </pre>
