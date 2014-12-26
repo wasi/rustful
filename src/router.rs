@@ -58,7 +58,7 @@
 use Router;
 
 use std::collections::HashMap;
-use std::collections::hash_map::{Occupied, Vacant};
+use std::collections::hash_map::{OccupiedEntry, VacantEntry};
 use std::vec::Vec;
 use hyper::method::Method;
 
@@ -157,8 +157,8 @@ impl<T> TreeRouter<T> {
 			&mut **self.variable_route.as_mut::<'a>().unwrap()
 		} else {
 			match self.static_routes.entry(key.to_string()) {
-				Occupied(entry) => entry.into_mut(),
-				Vacant(entry) => entry.set(TreeRouter::new())
+				OccupiedEntry(entry) => entry.into_mut(),
+				VacantEntry(entry) => entry.set(TreeRouter::new())
 			}
 		}
 	}
@@ -207,7 +207,7 @@ impl<T> Router<T> for TreeRouter<T> {
 					Static => {
 						current.static_routes.get(&path[index]).map(|next| {
 							variables.get_mut(index).map(|v| *v = false);
-							
+
 							stack.push((&*next, Wildcard, index+1));
 							stack.push((&*next, Variable, index+1));
 							stack.push((&*next, Static, index+1));
@@ -288,8 +288,8 @@ impl<T: Clone> TreeRouter<T> {
 
 		for (key, router) in router.static_routes.iter() {
 			let next = match self.static_routes.entry(key.clone()) {
-				Occupied(entry) => entry.into_mut(),
-				Vacant(entry) => entry.set(TreeRouter::new())
+				OccupiedEntry(entry) => entry.into_mut(),
+				VacantEntry(entry) => entry.set(TreeRouter::new())
 			};
 			next.merge_router(variable_names.clone(), router);
 		}
@@ -563,7 +563,7 @@ mod test {
 		let router2 = TreeRouter::from_routes(&routes2);
 
 		router1.insert_router(":a", &router2);
-		
+
 		check_variable(router1.find(&Get, "path/to/test1"), Some("path, to, test1"));
 		check_variable(router1.find(&Get, "path/to/test1/test"), Some("path, to, test1"));
 	}
@@ -586,7 +586,7 @@ mod test {
 		check(router1.find(&Get, "path"), None);
 	}
 
-	
+
 	#[bench]
 	fn search_speed(b: &mut Bencher) {
 		let routes = [
@@ -627,7 +627,7 @@ mod test {
 		});
 	}
 
-	
+
 	#[bench]
 	fn wildcard_speed(b: &mut Bencher) {
 		let routes = [
